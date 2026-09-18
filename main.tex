@@ -888,7 +888,9 @@ Portanto, a complexidade temporal do algoritmo de Grover é $\mathcal{O}(\sqrt{N
 
 \subsection{O Problema da Colisão em Funções 2-para-1}
 
-Proposto por Gilles Brassard, Peter H{\o}yer e Alain Tapp em 1997 \cite{brassard1997quantum}, o algoritmo BHT resolve o \textit{Problema da Colisão} (\textit{Collision Problem}) \cite{nielsen2010}. Dada uma função $f: \{0, \dots, N-1\} \to \{0, \dots, N/2 - 1\}$ que é $2$-para-$1$ (cada imagem $y$ possui exatamente duas pré-imagens distintas $x_1 \neq x_2$ tais que $f(x_1) = f(x_2)$), o objetivo consiste em identificar um par de colisão $(x_1, x_2)$. Esse problema fundamenta a análise de segurança de funções de \textit{hash} criptográficas e esquemas de assinatura digital. Classicamente, a melhor abordagem probabilística baseada no Paradoxo do Aniversário requer $\mathcal{O}(\sqrt{N}) = \mathcal{O}(N^{1/2})$ consultas à função para encontrar uma colisão com alta probabilidade.
+\begin{sloppypar}
+Proposto por Gilles Brassard, Peter H{\o}yer e Alain Tapp em 1997 \cite{brassard1997quantum, nielsen2010}, o algoritmo BHT resolve o \textit{Problema da Colisão} (\textit{Collision Problem}). Dada uma função $f: \{0, \dots, N-1\} \to \{0, \dots, N/2 - 1\}$ que é $2$-para-$1$, ou seja, onde cada imagem $y$ possui exatamente duas pré-imagens distintas $x_1 \neq x_2$ tais que $f(x_1) = f(x_2)$, o objetivo consiste em identificar um par de colisão $(x_1, x_2)$. Esse problema fundamenta a análise de segurança de funções de \textit{hash} criptográficas e esquemas de assinatura digital. Classicamente, a melhor abordagem probabilística, baseada no Paradoxo do Aniversário, requer $\mathcal{O}(N^{1/2})$ consultas à função.
+\end{sloppypar}
 
 \subsection{A Estratégia Híbrida e a Construção do Oráculo BHT}
 
@@ -899,7 +901,9 @@ O algoritmo BHT supera a barreira clássica do paradoxo do aniversário ao combi
     \item \textbf{Busca Quântica de Grover:} Se não houver colisão na tabela, existem exatamente $M$ entradas fora da amostra que colidem com os valores previamente tabelados. Aplica-se a busca de Grover sobre o espaço de dimensão $N$ para localizar um estado $x^*$ cuja imagem $f(x^*)$ coincida com algum valor da tabela clássica.
 \end{enumerate}
 
+\begin{sloppypar}
 Para implementar o oráculo quântico $V$ que reconhece as colisões, decompõe-se o operador unitário na estrutura modular:
+\end{sloppypar}
 \begin{equation}
     V = F^\dagger U F
 \end{equation}
@@ -1128,7 +1132,9 @@ Logo, a QPE requer $\mathcal{O}(t^2)$ portas lógicas de rotina geométrica e ex
 
 \section{Algoritmo de Shor}
 
-O algoritmo proposto por Peter Shor em 1994 \cite{shor1994algorithms, nielsen2010} resolve eficientemente o problema de determinar a ordem modular, isto é, achar o menor inteiro positivo $r$ tal que $a^r \equiv 1 \pmod{N}$, que no fundo equivale a encontrar o período da função modular $f(x) = a^x \pmod N$.
+\begin{sloppypar}
+O algoritmo proposto por Peter Shor em 1994 \cite{shor1994algorithms, nielsen2010} resolve eficientemente o problema de determinar a \textbf{ordem modular}: achar o menor inteiro positivo $r$ tal que $a^r \equiv 1 \pmod{N}$. No fundo, trata-se de encontrar o período da função modular $f(x) = a^x \pmod N$.
+\end{sloppypar}
 \begin{enumerate}
     \item O algoritmo de Shor prepara um estado quântico que ``codifica'' essa função periódica. 
     \item A QFT é aplicada a esse estado.
