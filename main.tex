@@ -65,21 +65,63 @@ sorting=ynt
 \date{Setembro 2025 -- Setembro 2026}
 
 \begin{document}
+
+% --- CAPA OFICIAL UFABC ---
+\begin{titlepage}
+    \centering
+    \includegraphics[width=3.2cm]{images/ufabc_logo.png}\\[0.2cm]
+    {\large \textbf{FUNDAÇÃO UNIVERSIDADE FEDERAL DO ABC}}\\[0.1cm]
+    {\normalsize \textbf{Pró-Reitoria de Pesquisa (ProPes) -- CPIC}}\\[0.4cm]
+
+    {\large \textbf{Relatório Final de Iniciação Científica}}\\[0.1cm]
+    {\small Referente ao Edital: \textbf{Edital ProPes nº 01/2025}}\\[0.5cm]
+
+    {\Large \textbf{Introdução à Computação Quântica:}}\\[0.15cm]
+    {\large \textbf{Fundamentos e Algoritmos Quânticos}}\\[0.6cm]
+
+    \begin{flushleft}
+        \small
+        \textbf{Nome do Aluno:} Felipe Junqueira Leite \\[0.25cm]
+        \textbf{Assinatura do Aluno:} \rule{0.65\textwidth}{0.4pt} \\[0.45cm]
+        \textbf{Nome do Orientador:} Prof. Dr. André Martin Timpanaro \\[0.25cm]
+        \textbf{Assinatura do Orientador:} \rule{0.65\textwidth}{0.4pt} \\[0.45cm]
+        \textbf{Título do Projeto:} Introdução à Computação Quântica: Fundamentos e Algoritmos Quânticos \\[0.25cm]
+        \textbf{Palavras-chave do Projeto:} Computação Quântica, Qiskit, Algoritmo de Shor, Algoritmo de Grover, Algoritmo BHT, Informação Quântica. \\[0.25cm]
+        \textbf{Área do Conhecimento do Projeto:} Ciências Exatas e da Terra -- Ciência da Computação / Física Quântica \\[0.25cm]
+        \textbf{Bolsista:} Não (Voluntário)
+    \end{flushleft}
+
+    \vfill
+
+    {\small \textbf{Santo André -- SP}}\\[0.05cm]
+    {\small \textbf{2026}}
+\end{titlepage}
+
+% --- PÁGINA DE ROSTO / FORMATO ARTIGO ---
 \maketitle
 
 \begin{abstract}
+\singlespacing
 Este trabalho apresenta um estudo prático e teórico dos fundamentos da computação quântica e de seus principais algoritmos. O objetivo central é transpor a barreira entre o formalismo matemático do Espaço de Hilbert e a implementação de circuitos lógicos funcionais. Utilizando a linguagem Python e o \textit{framework} Qiskit, foram desenvolvidos e simulados experimentos contemplando a criação dos quatro Estados de Bell, a verificação empírica da Desigualdade CHSH e o emaranhamento multipartido (GHZ). Adicionalmente, o trabalho detalha a arquitetura e a execução de algoritmos quânticos avançados, especificamente o Algoritmo de Grover para busca não estruturada, o Algoritmo BHT para resolução do problema da colisão e o Algoritmo de Shor para fatoração de inteiros, apoiados pelas sub-rotinas da Transformada de Fourier Quântica (QFT) e da Estimação de Fases Quântica (QPE). Os resultados validam o ganho de eficiência e as vantagens geométricas inerentes ao processamento quântico frente aos métodos clássicos tradicionais.
 
-\vspace{0.5cm}
+\vspace{0.4cm}
 \noindent\textbf{Palavras-chave:} Computação Quântica, Qiskit, Algoritmo de Shor, Algoritmo de Grover, Algoritmo BHT, Informação Quântica.
 \end{abstract}
 
-\renewcommand{\abstractname}{Abstract}
+\clearpage
+
+% --- ABSTRACT EM INGLÊS ---
+\vspace*{1.5cm}
+\renewcommand{\abstractname}{\Large Abstract}
 \begin{abstract}
+\singlespacing
+\normalsize
 This work presents a practical and theoretical study of quantum computing fundamentals and its main algorithms. The central objective is to bridge the gap between the mathematical formalism of Hilbert Space and the implementation of functional logic circuits. Using Python and the Qiskit framework, experiments were developed and simulated covering the creation of the four Bell States, the empirical verification of the CHSH Inequality, and multipartite entanglement (GHZ). Additionally, the research details the architecture and execution of advanced quantum algorithms, specifically Grover's Algorithm for unstructured search, the BHT Algorithm for the collision problem, and Shor's Algorithm for integer factorization, supported by the Quantum Fourier Transform (QFT) and Quantum Phase Estimation (QPE) subroutines. The results validate the efficiency gain and inherent geometric advantages of quantum processing over traditional classical methods.
 
-\vspace{0.5cm}
+\vspace{0.4cm}
+\begin{sloppypar}
 \noindent\textbf{Keywords:} Quantum Computing, Qiskit, Shor's Algorithm, Grover's Algorithm, BHT Algorithm, Quantum Information.
+\end{sloppypar}
 \end{abstract}
 
 \clearpage
