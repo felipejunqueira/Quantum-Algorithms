@@ -126,12 +126,12 @@ No plano complexo, um número $Z = a + bi$ é representado como um ponto em um s
 
 Dessa forma, $Z$ assume a forma trigonométrica $Z = r(\cos{\phi} + i\sin{\phi})$. Através da fórmula de Euler, $e^{i\phi} = \cos{\phi} + i\sin{\phi}$, podemos simplificar essa expressão para a forma exponencial $Z = re^{i\phi}$.
 
-Quando restringimos o raio ao valor unitário $(r = 1)$, os números complexos resultantes mapeiam o círculo unitário. Este conceito é o alicerce para a representação de estados na \textbf{Esfera de Bloch} (vide figura \ref{fig:bloch_sphere}). Enquanto um número complexo unitário descreve uma trajetória em um círculo bidimensional, um qubit é representado na superfície de uma esfera tridimensional. Nela, a conservação de probabilidade exige que o estado seja normalizado \(\braket{\psi}{\psi} =  1\). No mapeamento da esfera, o ângulo o $\theta$ define a probabilidade de colapso entre os estados da base computacional $\ket{0}$ e $\ket{1}$, enquanto $\phi$ caracteriza a fase relativa entre eles.
+Quando restringimos o raio ao valor unitário $(r = 1)$, os números complexos resultantes mapeiam o círculo unitário. Este conceito é o alicerce para a representação de estados na \textbf{Esfera de Bloch} (vide Figura \ref{fig:bloch_sphere}). Enquanto um número complexo unitário descreve uma trajetória em um círculo bidimensional, um qubit é representado na superfície de uma esfera tridimensional. Nela, a conservação de probabilidade exige que o estado seja normalizado \(\braket{\psi}{\psi} =  1\). No mapeamento da esfera, o ângulo $\theta$ define a probabilidade de colapso entre os estados da base computacional $\ket{0}$ e $\ket{1}$, enquanto $\phi$ caracteriza a fase relativa entre eles.
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.5\linewidth]{images/Bloch_sphere.png}
-    \caption{A esfera de Bloch, uma representação geométrica de um sistema quântico de dois níveis \cite{bloch_sphere_wikimedia}}
+    \caption{A esfera de Bloch, uma representação geométrica de um sistema quântico de dois níveis \cite{bloch_sphere_wikimedia}.}
     \label{fig:bloch_sphere}
 \end{figure}
 
@@ -141,7 +141,7 @@ A descrição de sistemas quânticos fundamenta-se na estrutura do Espaço de Hi
 
 \subsection{A Geometria do Qubit e a Natureza das fases}
 
-Na representação da Esfera de Bloch (Figura \ref{fig:bloch_sphere}), os polos definem a base computacional: o Polo Norte corresponde ao estado $\ket{0}$. Qualquer estado puro de um qubit pode ser visualizado como um vetor tridimensional que aponta do centro para a superfície da esfera.
+Na representação da Esfera de Bloch (Figura \ref{fig:bloch_sphere}), os polos definem a base computacional: o Polo Norte corresponde ao estado $\ket{0}$ e o Polo Sul ao estado $\ket{1}$. Qualquer estado puro de um qubit pode ser visualizado como um vetor tridimensional que aponta do centro para a superfície da esfera.
 
 Para visualizar a superposição, pode-se traçar um paralelo com uma moeda girando no ar. Enquanto uma moeda pousada sobre a mesa representa um bit clássico (estritamente cara ou coroa), a moeda em rotação representa o qubit: ela não está em nenhum dos dois estados absolutos, mas sim em um espectro contínuo de probabilidades. É apenas no momento em que a moeda é parada por uma mão --- o equivalente à medição quântica --- que o sistema é forçado a colapsar para um valor definido.
 
@@ -152,7 +152,7 @@ Matematicamente, utilizando os ângulos de coordenadas esféricas,  o estado ger
     \label{eq:qubit_general_state}
 \end{equation}
 
-Uma característica contra-intuitiva dessa formulação é a divisão do ângulo polar $\theta$ por 2. Essa adaptação é uma necessidade geométrica profunda: no Espaço de Hilbert abstrato, os estados $\ket{0}$ e $\ket{1}$ são vetores ortogonais (separados por $90^\circ$. Contudo, na visualização 3D da esfera de Bloch, eles ocupam polos opostos (separados por $180^\circ$). O fator $\theta/2$ atua como um conversor entre a álgebra linear complexa e a geometria euclidiana tridimensional.
+Uma característica contra-intuitiva dessa formulação é a divisão do ângulo polar $\theta$ por 2. Essa adaptação é uma necessidade geométrica profunda: no Espaço de Hilbert abstrato, os estados $\ket{0}$ e $\ket{1}$ são vetores ortogonais (separados por $90^\circ$). Contudo, na visualização 3D da esfera de Bloch, eles ocupam polos opostos (separados por $180^\circ$). O fator $\theta/2$ atua como um conversor entre a álgebra linear complexa e a geometria euclidiana tridimensional.
 
 A inclinação do vetor, dada pela latitude $\theta$ (onde $0 \le \theta \le \pi$), governa estritamente a \textbf{probabilidade} de colapso durante uma medição, obedecendo à regra de Born. Se o vetor repousa exatamente no equador da esfera ($\theta = \pi/2$), as probabilidades de medir $0$ ou $1$ tornam-se perfeitamente iguais (50\% para cada).
 
@@ -212,7 +212,7 @@ A seguinte tabela apresenta os principais conceitos que formam a base da teoria 
     \label{tab:tab1}
 \end{table}
 
-A notação do Bra-Ket sobre um mesmo vetor, obtido em espaços duais um ao outro. Enquanto o Ket é representado por um vetor coluna, o Bra é representado por um vetor linha, sendo obtido pela transposta conjugada do Ket. 
+Na notação de Dirac, o Bra e o Ket representam o mesmo estado em espaços vetoriais duais. Enquanto o Ket é representado por um vetor coluna, o Bra é representado por um vetor linha, sendo obtido pela transposta conjugada do Ket. 
 
 
 Exemplo:\[
@@ -268,7 +268,7 @@ O \textbf{espaço dual $V^*$} contém os funcionais lineares, representados pelo
 \gamma^*\alpha + \delta^*\beta
 \]
 
-O \textbf{qubit} da computação quântica é o equivalente ao bit do computador clássico. Diferente de um bit clássico, a estrutura de espaço vetorial de $\mathcal{H}$ permite que um qubit exista em uma \textbf{combinação linear} de seus estados de base. Assim, um estado genérico é escrito como $\ket{\phi} = \alpha\ket{0} + \beta\ket{1}$, com $\alpha, \beta\in \mathbb{C}$ chamados de amplitude de probabilidade. As amplitudes podem ser negativas ou complexas. É essa característica que permite a \textbf{interferência} (amplitudes que se cancelam), algo que não existe na probabilidade clássica. Matematicamente, $\ket{0}$ e $\ket{1}$ são vetores ortogonais. Mas, fisicamente, eles representam dois estados distinguíveis e mensuráveis de um sistema quântico real, como o spin de um elétron, polarização de um fóton, níveis de energia de um átomo, etc. Embora a base computacional $(\ket{0}, \ket{1})$, seja a mais comum, o qubit pode ser representado em outras bases, como a de sinal   Para calcular a probabilidade de medir o qubit como 0 ou 1, Calcula-se o módulo ao quadrado da sua amplitude correspondente.
+O \textbf{qubit} da computação quântica é o equivalente ao bit do computador clássico. Diferente de um bit clássico, a estrutura de espaço vetorial de $\mathcal{H}$ permite que um qubit exista em uma \textbf{combinação linear} de seus estados de base. Assim, um estado genérico é escrito como $\ket{\phi} = \alpha\ket{0} + \beta\ket{1}$, com $\alpha, \beta\in \mathbb{C}$ chamados de amplitude de probabilidade. As amplitudes podem ser negativas ou complexas. É essa característica que permite a \textbf{interferência} (amplitudes que se cancelam), algo que não existe na probabilidade clássica. Matematicamente, $\ket{0}$ e $\ket{1}$ são vetores ortogonais. Mas, fisicamente, eles representam dois estados distinguíveis e mensuráveis de um sistema quântico real, como o spin de um elétron, polarização de um fóton, níveis de energia de um átomo, etc. Embora a base computacional $(\ket{0}, \ket{1})$ seja a mais comum, o qubit pode ser representado em outras bases, como a base de Hadamard ($\ket{+}, \ket{-}$). Para calcular a probabilidade de medir o qubit como 0 ou 1, calcula-se o módulo ao quadrado da sua amplitude correspondente.
 
 
 Exemplo: A probabilidade de medir $\ket{0}$ é $P(0) = |\alpha|^2$, enquanto a probabilidade de medir $\ket{1}$ é $P(1) = |\beta|^2$.
@@ -286,7 +286,7 @@ Para realizar cálculos mais complexos e programas mais sofisticados, faz-se nec
 \begin{enumerate}
     \item Descrever o espaço de Hilbert do sistema composto, que são sistemas de múltiplas partes, com mais de 1 qubit ou interações entre elétrons.
     \item Representar operações conjuntas sobre múltiplos qubits. Ou seja, pode-se representar um espaço de N qubits que possui $2^N$ dimensões.
-    \item Combinar estados de sistemas quânticos independentes. Isto é, no espaço combinado de 2 qubits, existem estados que não podem ser escritos como um produto tensorial simples de estados individuais. Um exemplo é o estado de Bell \(\frac{1}{\sqrt{2}}(\ket{00}+\ket{11}\) que não pode ser fatorado em \((a\ket{0}+b\ket{1}) \otimes (c\ket{0}+\ket{1})\) com $a,b,c,d\in\mathbb{R}$. Estes estados ``não fatoráveis'' são os \textbf{estados emaranhados}. Assim, definindo e identificando o \textbf{emaranhamento}, que não está presente em sistemas individuais.
+    \item Combinar estados de sistemas quânticos independentes. Isto é, no espaço combinado de 2 qubits, existem estados que não podem ser escritos como um produto tensorial simples de estados individuais. Um exemplo é o estado de Bell \(\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})\) que não pode ser fatorado em \((a\ket{0}+b\ket{1}) \otimes (c\ket{0}+d\ket{1})\) com $a,b,c,d\in\mathbb{C}$. Estes estados ``não fatoráveis'' são os \textbf{estados emaranhados}. Assim, definindo e identificando o \textbf{emaranhamento}, que não está presente em sistemas individuais.
 \end{enumerate}
 
 O emaranhamento quântico funciona como um par de dados perfeitamente sincronizados. Se dois dados clássicos são lançados em locais distintos, os resultados são estatisticamente independentes. Contudo, se esses dados estivessem quanticamente emaranhados, ao observar que o primeiro dado resultou no número 6, o observador saberia instantaneamente que o segundo dado, mesmo a anos-luz de distância, também resultou no número 6. Essa correlação instantânea, que desafia a intuição espacial clássica, é o que permite a transferência massiva de informações em circuitos quânticos.
@@ -326,13 +326,13 @@ O emaranhamento quântico funciona como um par de dados perfeitamente sincroniza
 
 \textit{Exemplo:} Para aplicar uma porta em um qubit e não afetar a outro, podemos usar a porta Pauli-X no primeiro e a Identidade I no segundo: $X \otimes I$.
 
-O \textbf{conjugado complexo} de uma matriz, é matriz obtida calculando o conjugado complexo de cada elemento individualmente sem mudar a posição de ninguém. O conjugado de \(a+bi\) é \(a-bi\). De \(a-bi\) é \(a+bi\). O conjugado complexo de um número real é ele mesmo.
+O \textbf{conjugado complexo} de uma matriz é a matriz obtida calculando o conjugado complexo de cada elemento individualmente sem mudar a posição de ninguém. O conjugado de \(a+bi\) é \(a-bi\). De \(a-bi\) é \(a+bi\). O conjugado complexo de um número real é ele mesmo.
 
-A matriz \textbf{transposta conjugada} ou \textbf{adjunta hermitiana} é uma operação muito mais importante e comum em mecânica quântica, pois ela que define os operadores hermitianos (\(A=A^\dagger\)) e unitários (\(U^\dagger = U^{-1}\)).
+A matriz \textbf{transposta conjugada} ou \textbf{adjunta hermitiana} é uma operação muito mais importante e comum em mecânica quântica, pois é ela que define os operadores hermitianos (\(A=A^\dagger\)) e unitários (\(U^\dagger = U^{-1}\)).
 
 O dual de um Ket $\ket{\psi}$ (vetor coluna) é o Bra $\bra{\psi}$ (vetor linha conjugado). A operação que faz essa conversão é a operação Dagger \(\ket{\psi}^\dagger = \bra{\psi}\).
 
-A operação Dagger faz a mesma coisa para os operadores. Ou seja, se um operador A age em um Ket, o resultado é um novo Ket $A\ket{\psi}$. Se quisermos saber qual é o Bra correspondente, basta fazer \((A\ket{\psi})^\dagger = \bra{\psi}A^\dagger\). Onde a operação Dagger ``traduziu'' o Ket para o Bra e o operador $A$ para $A^\dagger$. Isso nos mostra como um operador de comporta no espaço dual.
+A operação Dagger faz a mesma coisa para os operadores. Ou seja, se um operador A age em um Ket, o resultado é um novo Ket $A\ket{\psi}$. Se quisermos saber qual é o Bra correspondente, basta fazer \((A\ket{\psi})^\dagger = \bra{\psi}A^\dagger\). Onde a operação Dagger ``traduziu'' o Ket para o Bra e o operador $A$ para $A^\dagger$. Isso nos mostra como um operador se comporta no espaço dual.
 
 Essa operação é a ferramenta matemática que nos permite criar operadores que forçam o cumprimento dessas duas regras:
 \begin{enumerate}
@@ -352,7 +352,7 @@ Essa propriedade garante que o operador conserva o comprimento do vetor de estad
 
 \subsection{Aplicações}
 
-A regra fundamental de que um estado fundamental deve ser normalizado, $\braket{\psi}{\psi} = 1$, é  na verdade $(\ket{\psi}^\dagger)\ket{\psi} = 1$. A dagger está na própria definição de probabilidade.
+A regra fundamental de que um estado quântico deve ser normalizado, $\braket{\psi}{\psi} = 1$, é  na verdade $(\ket{\psi}^\dagger)\ket{\psi} = 1$. A dagger está na própria definição de probabilidade.
 
 Para saber o valor médio de uma medição do operador A em um estado $\ket{\psi}$, deve-se calcular $\bra{\psi}A\ket{\psi}$. Novamente, a dagger está em si, definindo o bra.
 
@@ -388,7 +388,7 @@ Porta H (Hadamard): é a porta da superposição. Transforma estados definidos e
 
 Portas $Z$ e $S$ (portas de fase): não mudam as probabilidades de medir 0 ou 1, mas introduzem uma mudança de fase no qubit, algo crucial para a interferência quântica.
 
-Porta CNOT (controlled not): esta é a primeira porta que faz os qubits interagirem, sendo a chave para criar o \textbf{emaranhamento}. Ela aplica uma porta NOT (X) no segundo qubit (alvo) se e somente se, o qubit de controle for essencial para o emaranhamento $(\ket{1})$. 
+Porta CNOT (controlled not): esta é a primeira porta que faz os qubits interagirem, sendo a chave para criar o \textbf{emaranhamento}. Ela aplica uma porta NOT (X) no segundo qubit (alvo) se, e somente se, o qubit de controle estiver no estado $\ket{1}$. 
 \begin{align}
     CNOT = \begin{pmatrix}
         1 & 0 & 0 & 0 \\
@@ -400,7 +400,7 @@ Porta CNOT (controlled not): esta é a primeira porta que faz os qubits interagi
 
 \subsection{Circuitos Quânticos}
 
-No geral, os algoritmos quânticos podem ser implementados através de circuitos quânticos. Esses circuitos são abstrações gráficas onde as linhas horizontais representam a evolução dos qubits no tempo, e os blocos representam a aplicação sucessiva de operadores unitários. A ordem de leitura de um circuito é intuitiva, mas é importante lembrar que, na álgebra, a aplicação de portas $A, B e C$ em sequência sobre um estado $\ket{\psi}$ é escrita da direita para a esquerda: $C\cdot B\cdot A\ket{\psi}$
+No geral, os algoritmos quânticos podem ser implementados através de circuitos quânticos. Esses circuitos são abstrações gráficas onde as linhas horizontais representam a evolução dos qubits no tempo, e os blocos representam a aplicação sucessiva de operadores unitários. A ordem de leitura de um circuito é intuitiva, mas é importante lembrar que, na álgebra, a aplicação de portas $A$, $B$ e $C$ em sequência sobre um estado $\ket{\psi}$ é escrita da direita para a esquerda: $C\cdot B\cdot A\ket{\psi}$.
 
 \begin{figure}[ht]
     \centering
@@ -409,9 +409,9 @@ No geral, os algoritmos quânticos podem ser implementados através de circuitos
     \label{fig:ex_circ}
 \end{figure}
 
-Cada linha horizontal representa um qubit. O tempo flui da esqueda para a direita. As ``caixas'' nas linhas são as portas lógicas (nesse caso a porta Hadamard). As linhas verticais conectando as linhas dos qubits representam portas de múltiplos qubits. No final, um símbolo de medição indica a leitura do resultado (operador hermitiano). \textit{Exemplo:} Tomar um qubit $q_0$, aplicar a porta Hadamard para criar a superposição, usar uma porta CNOT para emaranhá-lo como $q_1$ e finalmente medir os dois.
+Cada linha horizontal representa um qubit. O tempo flui da esquerda para a direita. As ``caixas'' nas linhas são as portas lógicas (nesse caso a porta Hadamard). As linhas verticais conectando as linhas dos qubits representam portas de múltiplos qubits. No final, um símbolo de medição indica a leitura do resultado (operador hermitiano). \textit{Exemplo:} Tomar um qubit $q_0$, aplicar a porta Hadamard para criar a superposição, usar uma porta CNOT para emaranhá-lo com $q_1$ e finalmente medir os dois.
 
-Ler um circuito da esquerda para a direita é o mesmo que multiplicar as matrizes das portas da direita para a esquerda no seu estado inicial, ou multiplicar a matriz da porta pelo vetor de estado do qubit. O estado final $\ket{\psi_{final}}$ é \(CNOT \cdot H \cdot \ket{\psi_{inicial}}\).
+Ler um circuito da esquerda para a direita é o mesmo que multiplicar as matrizes das portas da direita para a esquerda no seu estado inicial, ou multiplicar a matriz da porta pelo vetor de estado do qubit. O estado final $\ket{\psi_{final}}$ é \(CNOT \cdot (H \otimes I) \cdot \ket{\psi_{inicial}}\).
 
 \begin{align}
     \ket{01} = \ket{0} \otimes\ket{1} = 
@@ -444,7 +444,7 @@ Ler um circuito da esquerda para a direita é o mesmo que multiplicar as matrize
     \end{pmatrix}
 \end{align}
 
-O estado de 2 qubits está em um espaço de 4 dimensões. A base é \(\ket{00}, \ket{01}, \ket{10}, \ket{11}\)
+O estado de 2 qubits está em um espaço de 4 dimensões. A base é \(\ket{00}, \ket{01}, \ket{10}, \ket{11}\).
 
 Para aplicar operações em um sistema de múltiplos qubits, usamos o produto tensorial dos operadores. \textit{Exemplo:}
 
@@ -479,7 +479,7 @@ Para aplicar operações em um sistema de múltiplos qubits, usamos o produto te
     \end{pmatrix}
 \end{align}
 
-Operadores que agem em 2 qubits são matrizes $4x4$. Este operador $X\otimes I$ inverte o primeiro qubit e ignora o segundo. ``Fios'' quânticos carregam qubits (podem estar em superposição). Portas lógicas quânticas (os operadores unitários manipulam os estados dos qubits). 
+Operadores que agem em 2 qubits são matrizes $4 \times 4$. Este operador $X\otimes I$ inverte o primeiro qubit e ignora o segundo. No diagrama, os fios quânticos conduzem a evolução temporal dos qubits (que podem estar em superposição), enquanto as portas lógicas quânticas aplicam as operações unitárias que manipulam os seus estados. 
 
 Cada linha representa a ``vida'' de um qubit ao longo do tempo. Geralmente inicializamos os qubits no estado $\ket{0}$, que fica no início da linha, à esquerda.
 
@@ -487,15 +487,14 @@ A medição (a leitura final) é a aplicação do operador hermitiano (como Paul
 
 Exemplo: Criando o estado emaranhado de Bell:
 
-\begin{figure}
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.7\linewidth]{images/bell_state.png}
-    \caption{Circuito representando o estado emaranhado de Bell.
-    \cite{wikipedia_bell_state}}
+    \caption{Circuito representando o estado emaranhado de Bell. \cite{wikipedia_bell_state}}
     \label{fig:bell_state}
 \end{figure}
 
-Primeiro, começamos com dois qubits $q_0 e q_1$ no estado $\ket{0}$. Usando o produto tensorial, o estado combinado do sistema se torna \(\ket{\psi_0} = \ket{0} \otimes \ket{0} = \ket{00}\)
+Primeiro, começamos com dois qubits $q_0$ e $q_1$ no estado $\ket{0}$. Usando o produto tensorial, o estado combinado do sistema se torna \(\ket{\psi_0} = \ket{0} \otimes \ket{0} = \ket{00}\).
 
 Segundo, aplicamos a porta H em $q_0$ e a porta I em $q_1$. O operador combinado é $H \otimes I$. 
 \begin{align}
@@ -509,15 +508,15 @@ Distribuindo o produto tensorial, temos:
 
 Agora aplicamos a operação $CNOT$ no estado $\ket{\psi_1}$:
 \begin{align}
-    \ket{\psi_2} = CNOT\ket{\psi_1} = CNOT(\frac{1}{\sqrt{2}}\ket{00} + \ket{10})
+    \ket{\psi_2} = CNOT\ket{\psi_1} = CNOT\left(\frac{1}{\sqrt{2}}(\ket{00} + \ket{10})\right)
 \end{align}
-O $CNOT$ age em cada parte da superposição: no termo $\ket{00}$ o qubit de controle $q_0$ é 0, então nada acontece ($\ket{00}$). No termo $\ket{10}$ o qubit de controle $q_0$ é 1, então o $CNOT$ inverte o $q_1$ de 0 para 1 ($\ket{11}$. O estado final é 
+O $CNOT$ age em cada parte da superposição: no termo $\ket{00}$ o qubit de controle $q_0$ é 0, então nada acontece ($\ket{00}$). No termo $\ket{10}$ o qubit de controle $q_0$ é 1, então o $CNOT$ inverte o $q_1$ de 0 para 1 ($\ket{11}$). O estado final é 
 \begin{align}
     \ket{\psi_{final}} = \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})
     \label{eq:bell_state}
 \end{align}
 
-O resultado \eqref{eq:bell_state} mostra o emaranhamento criado. Se medir $q_0$ e obter 0, $q_1$ com $100\%$ de certeza sera 0. Se medir $q_0$ como 1, $q_1$ será 1. As partículas estão conectadas.
+O resultado \eqref{eq:bell_state} mostra o emaranhamento criado. Se medirmos $q_0$ e obtivermos 0, $q_1$ será com $100\%$ de certeza 0. Se medirmos $q_0$ como 1, $q_1$ será 1. As partículas estão conectadas.
 
 Agora, o ato de medir é destrutivo (com respeito à superposição) e descrito por um operador hermitiano. Nós sempre medimos com respeito a uma base, sendo a mais comum delas a binária. 
 
@@ -525,9 +524,9 @@ Existem 2 regras que governam o que acontece durante a medição, que são os po
 
 Regra 1: a regra de Born (calculando as probabilidades). Esta regra nos diz quais são as chances de obter cada resultado possível. 
 
-\textbf{Definição:} para um estado quântico geral $\ket{\psi} = \alpha_0\ket{0}+\alpha_1\ket{1}+...$, a probabilidade de medir um estado base específico (ex: $\ket{0}$) é o módulo ao quadrado da sua amplitude. $P(0) = |\alpha_0|^2, P(1) = |\alpha_1|^2$, etc. Isso nos diz que, ao medir o estado de Bell, nunca será obtido 01 ou 10. O emaranhamento é refletido nas probabilidades.
+\textbf{Definição:} para um estado quântico geral $\ket{\psi} = \alpha_0\ket{0}+\alpha_1\ket{1}+...$, a probabilidade de medir um estado base específico (ex: $\ket{0}$) é o módulo ao quadrado da sua amplitude: $P(0) = |\alpha_0|^2$, $P(1) = |\alpha_1|^2$, etc. Isso nos diz que, ao medir o estado de Bell, nunca será obtido 01 ou 10. O emaranhamento é refletido nas probabilidades.
 
-Regra 2: o colapso da função de onda (o estado pós-medição).
+Regra 2: o colapso da função de onda (o estado pós-medição). Imediatamente após a medição projetiva resultar em um autoestado específico $\ket{i}$, o sistema colapsa para $\ket{i}$, de modo que medições subsequentes na mesma base retornarão deterministicamente o mesmo resultado.
 
 \subsection{Algoritmos Quânticos}
 
@@ -553,7 +552,7 @@ circuito.cx(0, 1)
 circuito.measure([0, 1], [0, 1])
 \end{lstlisting}
 
-O circuito gerado pelo código pode ser visualizado na figura \ref{fig:circuito_bell_py}
+O circuito gerado pelo código pode ser visualizado na Figura \ref{fig:circuito_bell_py}.
 
 \begin{figure}[ht]
     \centering
@@ -565,7 +564,7 @@ Ao executar a simulação, obtivemos resultados concentrados nos estados $\ket{0
 
 \subsection{Implementação do segundo Estado de Bell}
 
-Para a gereção do estado $\ket{\Phi^-} = \frac{1}{\sqrt{2}}(\ket{00} - \ket{11})$, introduzimos uma inversão de fase no sistema. Diferente do estado anterior, aplicamos uma porta $X$ no qubit de controle antes da porta Hadamard, garantindo que a superposição ocorra a partir do estado de base $\ket{1}$.
+Para a geração do estado $\ket{\Phi^-} = \frac{1}{\sqrt{2}}(\ket{00} - \ket{11})$, introduzimos uma inversão de fase no sistema. Diferente do estado anterior, aplicamos uma porta $X$ no qubit de controle antes da porta Hadamard, garantindo que a superposição ocorra a partir do estado de base $\ket{1}$.
 
 \begin{lstlisting}[caption={Implementação em Python para a geração do Segundo Estado de Bell $\ket{\Phi^-}$.}]
 circuito = QuantumCircuit(2, 2)
@@ -583,7 +582,7 @@ circuito.cx(0, 1)
 circuito.measure([0, 1], [0, 1])
 \end{lstlisting}
 
-O circuito resultante, apresentando a porta de pré-processamento X, pode ser visualizado na figura \ref{fig:circuito_phi_minus}.
+O circuito resultante, apresentando a porta de pré-processamento X, pode ser visualizado na Figura \ref{fig:circuito_phi_minus}.
 
 \begin{figure}[ht]
     \centering
@@ -592,7 +591,7 @@ O circuito resultante, apresentando a porta de pré-processamento X, pode ser vi
     \label{fig:circuito_phi_minus}
 \end{figure}
 
-Embora o histograma de medição apresente resultados estatisticamente idênticos ao estado $\ket{\Phi^+}$ (distribuição equilibrada entre $\ket{00}$ $\ket{11}$, a diferença reside na fase relativa entre os estados, componente fundamental para algoritmos como o de Deutsch-Jozsa.
+Embora o histograma de medição apresente resultados estatisticamente idênticos ao estado $\ket{\Phi^+}$ (distribuição equilibrada entre $\ket{00}$ e $\ket{11}$), a diferença reside na fase relativa entre os estados, componente fundamental para algoritmos como o de Deutsch-Jozsa.
 
 \subsection{Implementação do terceiro Estado de Bell}
 
@@ -685,11 +684,11 @@ angulo_bob_W = np.pi / 4
 angulo_bob_V = -np.pi / 4
 \end{lstlisting}
 
-Através da simulação utilizando o \texttt{AerSimulator}, com 8192 \textit{shots} para mitigar a variância estatística, obtivemos sistematicamente valores de $S > 2$. Este resultado simula com êxito a quebra do imite clássico, confirmando a natureza não-local do emaranhamento fundamental para protocolos avançados de computação e criptografia quântica.
+Através da simulação utilizando o \texttt{AerSimulator}, com 8192 \textit{shots} para mitigar a variância estatística, obtivemos sistematicamente valores de $S > 2$. Este resultado simula com êxito a quebra do limite clássico, confirmando a natureza não-local do emaranhamento fundamental para protocolos avançados de computação e criptografia quântica.
 
 \subsection{Implementação do Estado GHZ}
 
-Expandindo os conceitos de emaranhamento explorados nos estados de Bell, o estado GHZ (Greenberger-Horne-Zeilinger) representa o emaranhamento de três ou mais sub-sistemas. Para um sistema de três qubits, o estado é definido como $\ket{GHZ} = \frac{1}{\sqrt{2}}(\ket{000} + \ket{111})$.
+Expandindo os conceitos de emaranhamento explorados nos estados de Bell, o estado GHZ (Greenberger-Horne-Zeilinger) representa o emaranhamento de três ou mais subsistemas. Para um sistema de três qubits, o estado é definido como $\ket{GHZ} = \frac{1}{\sqrt{2}}(\ket{000} + \ket{111})$.
 
 A construção deste estado segue uma lógica análoga à do estado $\ket{\Phi^+}$. Inicia-se aplicando uma porta Hadamard ao primeiro qubit, criando uma superposição inicial. Em seguida, utilizam-se as portas CNOT em cascata para propagar esse estado para os qubits adjacentes.
 
@@ -709,7 +708,7 @@ circuito_ghz.cx(1, 2)
 circuito_ghz.measure([0, 1, 2], [0, 1, 2])
 \end{lstlisting}
 
-\begin{figure}
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.7\linewidth]{images/GHZ_circuit.png}
     \caption{Diagrama do circuito para o estado GHZ, ilustrando a propagação do emaranhamento em cascata.}
@@ -720,9 +719,9 @@ Ao realizar a simulação deste circuito, os resultados de medição colapsam ex
 
 \subsection{Sub-rotinas e Operações controladas}
 
-O desenvolvimento de algoritmos quânticos mais complexos, como o algorimo de Grover \cite{nielsen2010}, exige a aplicação condicional de operações, o que atua como um análogo quântico das estruturas de controle clássicas (\textit{if-statements}). Na biblioteca Qiskit, isso é implementado através da abstração de circuitos em portas lógicas personalizadas e da utilização de métodos como \texttt{control} e \texttt{compose} (ou \texttt{append}).
+O desenvolvimento de algoritmos quânticos mais complexos, como o algoritmo de Grover \cite{nielsen2010}, exige a aplicação condicional de operações, o que atua como um análogo quântico das estruturas de controle clássicas (\textit{if-statements}). Na biblioteca Qiskit, isso é implementado através da abstração de circuitos em portas lógicas personalizadas e da utilização de métodos como \texttt{control} e \texttt{compose} (ou \texttt{append}).
 
-Para demonstrar esse princípio, desenvolvemos um experimento onde a preparação de um estado de Bell é condicionada ao estado de um terceiro qbit de cotrole. O circuito base de Bell é transformado em uma operação única controlada.
+Para demonstrar esse princípio, desenvolvemos um experimento onde a preparação de um estado de Bell é condicionada ao estado de um terceiro qubit de controle. O circuito base de Bell é transformado em uma operação única controlada.
 
 Um aspecto fundamental deste experimento ocorre quando o qubit de controle é previamente colocado em superposição por uma porta Hadamard. O estado inicial do sistema de 3 qubits é $\ket{000}$. Ao aplicar a porta $H$ no qubit de controle $(q_0)$, obtemos:
 
@@ -730,7 +729,7 @@ Um aspecto fundamental deste experimento ocorre quando o qubit de controle é pr
     \ket{\psi_1} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \otimes \ket{00} = \frac{1}{\sqrt{2}}(\ket{000} + \ket{100})
 \end{equation}
 
-Quando a sub-rotina de Bell controlada é aplicada, ela age como a identidade caso $q_0 = \ket{0}$, e prepara o estado $\ket{\Phi^+}$ nos alvos ($q_1$ e $q_2$) caso $q_0 = \ket{1}$; Pelo princípio da linearidade \cite{nielsen2010}, o estado final resultante é:
+Quando a sub-rotina de Bell controlada é aplicada, ela age como a identidade caso $q_0 = \ket{0}$, e prepara o estado $\ket{\Phi^+}$ nos alvos ($q_1$ e $q_2$) caso $q_0 = \ket{1}$. Pelo princípio da linearidade \cite{nielsen2010}, o estado final resultante é:
 
 \begin{equation}
     \ket{\psi_{final}} = \frac{1}{\sqrt{2}}\ket{000} + \frac{1}{2}\ket{100} + \frac{1}{2}\ket{111}
@@ -770,32 +769,32 @@ A simulação estatística deste circuito confirma a teoria: as medições retor
 
 \section{Algoritmo de Grover}
 
-O algoritmo de Grover é o principal na busca em dados não estruturados \cite{nielsen2010}. Inicia-se com uma superposição de todas as possibilidades. Grover aumenta a probabilidade (amplitude) da resposta correta e diminui a probabilidade das respostas erradas. Isso é feito através de um processo geométrico. Sejam dois vetores:
+O algoritmo de Grover é o principal algoritmo quântico para busca em dados não estruturados \cite{nielsen2010}. Inicia-se com uma superposição de todas as possibilidades. Grover aumenta a probabilidade (amplitude) da resposta correta e diminui a probabilidade das respostas erradas. Isso é feito através de um processo geométrico. Sejam dois vetores:
 \begin{enumerate}
-    \item $\ket{W}$: o estado que queremos encontrar.
-    \item $\ket{S}$: o estado de superposição igualitária (média de todos).
+    \item $\ket{\omega}$: o estado alvo que queremos encontrar.
+    \item $\ket{s}$: o estado de superposição uniforme (média de todos os estados).
 \end{enumerate}
 
-O algoritmo gira o vetor de estado atual em direção ao $\ket{W}$. Segue o processo geométrico:
+O algoritmo gira o vetor de estado atual em direção a $\ket{\omega}$. Segue o processo geométrico:
 \begin{enumerate}
-    \item Começamos no estado $\ket{S}$.
+    \item Começamos no estado de superposição $\ket{s}$.
     \item O oráculo reflete o vetor, invertendo a fase do item vencedor.
     \item O difusor reflete o vetor em torno da média.
-    \item O resultado é que o vetor se aproxima mais do eixo vertical ($\ket{W}$).
+    \item O resultado é que o vetor se aproxima progressivamente do eixo vertical ($\ket{\omega}$).
 \end{enumerate}
 
 Para implementar esse algoritmo, precisa-se de três componentes principais:
 \begin{enumerate}[label=\Alph*.]
     \item Inicialização (superposição): começamos com todos os qubits em estado zero $\ket{00...0}$ e aplicamos a porta H a todos. Isso cria uma superposição onde todas as N respostas possíveis têm a mesma chance de serem medidas.
-    \item O oráculo ($U_f$): é a ``caixa preta''. É uma função que reconhece a resposta correta. Se o estado não é correto ($X \ne W$), ele não faz nada. Se o estado é o correto ($X = W$), ele inverte o sinal (fase) desse estado: $U_f\ket{x} = (-1)^{f(x)}\ket{x}$, onde $f(x) = 1$ para a resposta correta $f(x) = 0$ caso contrário. E então, $\ket{W} \longrightarrow -\ket{W}$. Isso ``marca'' a resposta correta matematicamente, mas se fosse medido agora, a probabilidade seria a mesma (pois é o quadrado da amplitude e $|-a|^2 = |a|^2$. Precisa-se, pois, do próximo passo para tornar essa marcação detectável.
-    \item O difusor (operador Grover): realiza a inversão sobre a média. Matematicamente, ele toma todas as amplitudes e as espelha em relação à média das amplitudes. Como o oráculo deixou a amplitude do $\ket{W}$ negativa (muito abaixo da média positiva), ao inverter sobre a média, a amplitude do $\ket{W}$ dispara para cima (ficar muito positiva), enquanto as outras diminuem.
+    \item O oráculo ($U_f$): é a ``caixa-preta''. É uma função que reconhece a resposta correta. Se o estado não é correto ($x \neq \omega$), ele não faz nada. Se o estado é o correto ($x = \omega$), ele inverte o sinal (fase) desse estado: $U_f\ket{x} = (-1)^{f(x)}\ket{x}$, onde $f(x) = 1$ para a resposta correta e $f(x) = 0$ caso contrário. Dessa forma, $\ket{\omega} \longrightarrow -\ket{\omega}$. Isso ``marca'' a resposta correta matematicamente, mas se o sistema fosse medido imediatamente, a probabilidade seria a mesma (pois a probabilidade é o quadrado da amplitude e $|-a|^2 = |a|^2$). Precisa-se, pois, do próximo passo para tornar essa marcação detectável.
+    \item O difusor (operador Grover): realiza a inversão sobre a média. Matematicamente, ele toma todas as amplitudes e as espelha em relação à média das amplitudes. Como o oráculo deixou a amplitude do $\ket{\omega}$ negativa (muito abaixo da média positiva), ao inverter sobre a média, a amplitude do $\ket{\omega}$ dispara para cima (tornando-se fortemente positiva), enquanto as outras diminuem.
 \end{enumerate}
 
-O algoritmo de Grover pode ser usado para acelerar a busca em Grafos. Ao querer saber se um grafo possui ciclo Hamiltoniano, seria feito um backtracking/DFS que poderia levar tempo exponencial. Mas nesse contexto, Grover seria usado para buscar no espaço de todas as permutações possíveis de vértices. O oráculo seria uma função simples que verifica se a sequência de vértices em questão é um caminho válido no grafo.
+Por exemplo, para determinar se um grafo possui um ciclo hamiltoniano, os métodos clássicos tradicionais de busca exaustiva (como retrocesso ou busca em profundidade) exigem tempo exponencial. No contexto quântico, o algoritmo de Grover pode ser empregado para pesquisar sobre o espaço de permutações de vértices, utilizando um oráculo capaz de verificar eficientemente se a sequência proposta constitui um caminho válido.
 
 \subsection{O Oráculo Quântico ($U_\omega$)}
 
-O primeiro componente fundamental do algoritmo de Grover é o oráculo, denotado por $U_\omega$. Sua função principal é atual como uma "caixa preta" que identifica a solução do problema de busca sem revelar qual é. Para um espaço de busca $U = \{0, ..., 2^n-1\}$ com $n$ qubits, definimos o estado alvo como $\ket{\omega}$.
+O primeiro componente fundamental do algoritmo de Grover é o oráculo, denotado por $U_\omega$. Sua função principal é atuar como uma ``caixa-preta'' que identifica a solução do problema de busca sem revelar qual é. Para um espaço de busca $U = \{0, ..., 2^n-1\}$ com $n$ qubits, definimos o estado alvo como $\ket{\omega}$.
 
 O oráculo aplica uma transformação condicional no estado do sistema. Se o estado avaliado não for a solução $(x \neq \omega)$, o oráculo atua como a matriz identidade, deixando o estado inalterado. Se o estado for a solução $(x = \omega)$, o oráculo inverte a sua fase (sinal). Matematicamente, isso é expresso como:
 
@@ -807,7 +806,7 @@ O oráculo aplica uma transformação condicional no estado do sistema. Se o est
     \end{cases}
 \end{equation}
 
-\begin{figure}
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.5\linewidth]{images/grover_oracle.png}
     \caption{Estrutura interna do Oráculo $U_5$. As portas Pauli-X atuam como condicionais para ativar a porta Z multi-controlada (MCZ) apenas no estado $\ket{0101}$.}
@@ -822,7 +821,7 @@ Por exemplo, considere um sistema de $n=4$ qubits onde desejamos encontrar o est
 
 No design e na análise de algoritmos quânticos, o gerenciamento de recursos (qubits) é tão crítico quanto a alocação de memória na computação clássica. Ao implementar portas multi-controladas complexas para oráculos grandes, as limitações topológicas do hardware exigem a decomposição de operações em portas menores (como portas Toffoli). Esse processo frequentemente requer a utilização de qubits auxiliares, conhecidos como \textit{ancillas}, para armazenar resultados intermediários de controle.
 
-O uso de ancillas impõe uma restrição fundamental: a necessidade de \textbf{descomputação} (\textit{uncomputing}). Após o resultado intermediário ter sido utilizado para acionar a operação no qubit alvo, as operações aplicadas nas ancillas devem ser revertidas espelhando o circuito. Se as ancillas não forem retornadas perfeitamente ao seu estado inicial (geralmente $\ket{0}$), elas permanecerão emaranhadas com o registro de processamento principal. Esse fenômeno gera lixo computacional (\textit{garbage entaglement} \cite{nielsen2010}), que destrói a coerência do sistema e impede que a interferência construtiva do difusor amplifique a probabilidade do estado correto.
+O uso de ancillas impõe uma restrição fundamental: a necessidade de \textbf{descomputação} (\textit{uncomputing}). Após o resultado intermediário ter sido utilizado para acionar a operação no qubit alvo, as operações aplicadas nas ancillas devem ser revertidas espelhando o circuito. Se as ancillas não forem retornadas perfeitamente ao seu estado inicial (geralmente $\ket{0}$), elas permanecerão emaranhadas com o registro de processamento principal. Esse fenômeno gera lixo computacional (\textit{garbage entanglement} \cite{nielsen2010}), que destrói a coerência do sistema e impede que a interferência construtiva do difusor amplifique a probabilidade do estado correto.
 
 \subsection{O Difusor e a reflexão de Householder}
 
@@ -840,7 +839,7 @@ A essência geométrica do algoritmo de Grover reside na combinação destas dua
 
 \subsection{Implementação do Algoritmo de Grover}
 
-O algoritmo de Grover foi construído de forma separada, mas executado junto. Foi criado o Oráculo e o Difusor como objetos independentes e depois usado o comando \texttt{append()} para juntá-los no circuito principal. Isso permite reutilizar o oráculo mais facilmente.
+A implementação prática do algoritmo de Grover foi estruturada de forma modular. O Oráculo e o Difusor foram desenvolvidos como blocos independentes e posteriormente acoplados através do método \texttt{append()} no circuito principal, facilitando a reutilização dos componentes.
 
 \begin{lstlisting}[caption={Implementação dos componentes do Algoritmo de Grover: Oráculo para o estado alvo $\ket{0101}$ e Difusor de Householder.}]
 # 1. Construção do Oráculo (U_w) para o estado |0101>
@@ -873,7 +872,7 @@ circuito_grover.measure([0, 1, 2, 3], [0, 1, 2, 3])
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1\linewidth]{images/grover_circ.png}
-    \caption{Circuito principal do Algoritmo de Grover abstraído em blocos modulares. O processo evidencia a inicialização em superposição seguida de 3 iterações consecutivas do Oráculo e Difusor}
+    \caption{Circuito principal do Algoritmo de Grover abstraído em blocos modulares. O processo evidencia a inicialização em superposição seguida de 3 iterações consecutivas do Oráculo e Difusor.}
     \label{fig:grover_circ}
 \end{figure}
 
@@ -896,7 +895,7 @@ Proposto por Gilles Brassard, Peter Høyer e Alain Tapp em 1997, o algoritmo BHT
 O algoritmo BHT supera a barreira clássica do paradoxo do aniversário ao combinar memória clássica com a busca de Grover em um protocolo híbrido de duas etapas:
 
 \begin{enumerate}[label=\textbf{\arabic*.}]
-    \item \textbf{Amostragem Clássica:} Sorteia-se um subconjunto de $M = \lceil N^{1/3} \rceil$ entradas aleatórias e armazena-se os pares $(x, f(x))$ em uma tabela \textit{hash}. Se houver colisão na própria amostra, o processo é concluído classicamente.
+    \item \textbf{Amostragem Clássica:} Sorteia-se um subconjunto de $M = \lceil N^{1/3} \rceil$ entradas aleatórias e armazenam-se os pares $(x, f(x))$ em uma tabela \textit{hash}. Se houver colisão na própria amostra, o processo é concluído classicamente.
     \item \textbf{Busca Quântica de Grover:} Se não houver colisão na tabela, existem exatamente $M$ entradas fora da amostra que colidem com os valores previamente tabelados. Aplica-se a busca de Grover sobre o espaço de dimensão $N$ para localizar um estado $x^*$ cuja imagem $f(x^*)$ coincida com algum valor da tabela clássica.
 \end{enumerate}
 
@@ -973,18 +972,18 @@ Somando as duas fases, o custo computacional total do algoritmo BHT é $\mathcal
 
 \section{Transformada de Fourier Quântica (QFT)}
 
-A Transformada de Fourier Quântica (QFT) é a contraparte quântica da Transformada Discreta de Fourier (DFT). No domínio clássico, a DFT age como um "prisma matemático", decompondo um sinal (um vetor de $N$ números complexos) em suas frequências constituintes, gerando um novo vetor de $N$ dados acessíveis.
+A Transformada de Fourier Quântica (QFT) é a contraparte quântica da Transformada Discreta de Fourier (DFT). No domínio clássico, a DFT age como um ``prisma matemático'', decompondo um sinal (um vetor de $N$ números complexos) em suas frequências constituintes, gerando um novo vetor de $N$ dados acessíveis.
 
-No domínio quântico, a QFT realiza a mesma transformação algébrica, mas opera estritamente sobre as \textbf{amplitudes de probabilidade} de um estado no Espaço de Hilbert, mudando a codficação da base computacional para a base de Fourier. A definição matemática para um estado da base $\ket{x}$ é:
+No domínio quântico, a QFT realiza a mesma transformação algébrica, mas opera estritamente sobre as \textbf{amplitudes de probabilidade} de um estado no Espaço de Hilbert, mudando a codificação da base computacional para a base de Fourier. A definição matemática para um estado da base $\ket{x}$ é:
 \begin{equation}
     QFT\ket{x} = \frac{1}{\sqrt{N}}\sum_{y=0}^{N-1} e^{\frac{2\pi i x y}{N}}\ket{y}
 \end{equation}
 
 \subsection{A Falsa Equivalência e o Paradoxo da Medição}
 
-É imperativo distinguir a utilidade da QFT em relação à Transformada Rápida de Fourier clássica (FFT). Enquanto a FFT clássica exige $O(N \log N)$ operações, a QFT processa os mesmos $N = 2^n$ dados usando apenas $O(n^2)$ portas lógicas. Para um sistema de 100 qubits ($N - 2^{100}$), a aceleração é massivamente exponencial.
+É imperativo distinguir a utilidade da QFT em relação à Transformada Rápida de Fourier clássica (FFT). Enquanto a FFT clássica exige $O(N \log N)$ operações, a QFT processa os mesmos $N = 2^n$ dados usando apenas $O(n^2)$ portas lógicas. Para um sistema de 100 qubits ($N = 2^{100}$), a aceleração é massivamente exponencial.
 
-Contudo, \textbf{a QFT não pode ser utilizada como um substituto direto para processar sinais clássicos}. Na computação clássica, o vetor de saída contendo todas as frequências pode ser lido inteiramente. Na computação quântica, o resultado da QFT é um estado em superposição. Pelos postulados da mecânica quântica, a medição causa o colapso irreversível da função de onda. Ao tentar "ler" o resultado da QFT, o observador obtém apenas um único estado base $\ket{y}$ com probabildiade $|c_y|^2$, destruindo imediatamente todas as outras frequências calculadas.
+Contudo, \textbf{a QFT não pode ser utilizada como um substituto direto para processar sinais clássicos}. Na computação clássica, o vetor de saída contendo todas as frequências pode ser lido inteiramente. Na computação quântica, o resultado da QFT é um estado em superposição. Pelos postulados da mecânica quântica, a medição causa o colapso irreversível da função de onda. Ao tentar ``ler'' o resultado da QFT, o observador obtém apenas um único estado base $\ket{y}$ com probabilidade $|c_y|^2$, destruindo imediatamente todas as outras frequências calculadas.
 
 Portanto, a QFT demonstra seu poder não no processamento de dados brutos, mas na extração de \textbf{propriedades globais} escondidas em um sistema quântico (como a periodicidade). Ela é projetada para causar padrões de interferência onde a resposta correta (a frequência dominante do período) concentra quase toda a amplitude de probabilidade, permitindo que uma única medição revele o segredo estrutural da função analisada. 
 
@@ -1010,9 +1009,9 @@ No entanto, a compilação teórica das portas de rotação $H$ e $R_k$ sem corr
     \ket{\psi_{circ}} = \frac{1}{2}\left( \ket{00} - \ket{01} - i\ket{10} + i\ket{11} \right)
 \end{equation}
 
-Observa-se uma anomalia geométrica: a amplitude $-i$, que pertence ao estado $\ket{1}$ (binário 01), foi alocada no estado $\ket{10}$ (decimal 2). Para alinhar o output físico à convenção matemática clássica, é mandatório aplicar portas unitárias \texttt{SWAP} ao final do circuito para inverter a ordem espacial dos qubits.
+Observa-se uma anomalia geométrica: a amplitude $-i$, que pertence ao estado $\ket{1}$ (binário 01), foi alocada no estado $\ket{10}$ (decimal 2). Para alinhar o \textit{output} físico à convenção matemática clássica, é mandatório aplicar portas unitárias \texttt{SWAP} ao final do circuito para inverter a ordem espacial dos qubits.
 
-\subsection{Complexidade do algoritmo da Transformada de Fourier Quântica (QFT)}
+\subsection{Complexidade do Algoritmo da Transformada de Fourier Quântica (QFT)}
 
 A eficiência da QFT é o motor por trás da aceleração exponencial em algoritmos de busca de período. Para processar um vetor de estado de $N = 2^n$ amplitudes (onde $n$ é o número de qubits), o melhor algoritmo clássico, a Transformada Rápida de Fourier (FFT), requer $\mathcal{O}(N \log N)$ operações. Substituindo $N$, a complexidade clássica escala como $\mathcal{O} (n 2^n)$, um crescimento exponencial em função do número de bits.
 
@@ -1020,9 +1019,9 @@ No circuito quântico, a construção da QFT é avaliada pela contagem de portas
 
 Essa progressão aritmética resulta em uma contagem exata de portas dada por $\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$. Adicionando as $\mathcal{O}(n)$ portas SWAP necessárias no final do circuito, a complexidade total do algoritmo assintoticamente converge para $\mathcal{O}(n^2)$ \cite{nielsen2010}. Isso representa uma extraordinária aceleração exponencial, executando uma transformação global sobre $2^n$ estados utilizando um número de recursos que cresce apenas polinomialmente.
 
-\section{Algoritmo da Estimação de fases (QPE)}
+\section{Algoritmo de Estimação de Fases (QPE)}
 
-A Estimação de Fases Quãntica (QPE - \textit{Quantum Phase Estimation}) é uma das sub-rotinas mais cruciais da computação quântica. Ela atua como a ponte entre a manipulação de fases abstratas e a extração de dados clássicos mensuráveis.
+A Estimação de Fases Quântica (QPE - \textit{Quantum Phase Estimation}) é uma das sub-rotinas mais cruciais da computação quântica. Ela atua como a ponte entre a manipulação de fases abstratas e a extração de dados clássicos mensuráveis.
 
 O problema fundamental que a QPE resolve é o seguinte: dado um operador unitário $U$ e um estado quântico $\ket{\Psi}$ que é autovetor desse operador, desejamos encontrar o autovalor associado. Como $U$ é unitário e preserva a conservação da probabilidade, o seu autovalor deve obrigatoriamente ter módulo 1. Pela fórmula de Euler, podemos escrever esse autovalor estritamente como uma fase complexa:
 
@@ -1047,7 +1046,7 @@ Ao aplicarmos o operador $U$ condicionado a um qubit do registrador de controle,
 
 Para obter a leitura exata de $\theta$ em formato binário fracionário, um único evento de \textit{kickback} é insuficiente. O algoritmo QPE aplica o operador $U$ em potências sucessivas de base 2 ($U^1, U^2, U^4, \dots, U^{2^{n-1}}$), condicionando cada potência a um dos $n$ qubits distintos do registrador de controle.
 
-Ao elevar o operador a uma potência $k$, o autovalor associado é matematicamente elevado à mesma potência: $U^k\ket{\Psi} = e^{2\pi i \theta}\ket{\Psi}$. Esse processo "fatia" a fase $\theta$, permitindo que cada qubit de controle reaja a uma  casa decimal específica do ângulo. Após essa cascata de operações condicionais, o estado isolado do resgistrador de controle (onde $N = 2^n$) torna-se:
+Ao elevar o operador a uma potência $k$, o autovalor associado é matematicamente elevado à mesma potência: $U^k\ket{\Psi} = e^{2\pi i \theta}\ket{\Psi}$. Esse processo ``fatia'' a fase $\theta$, permitindo que cada qubit de controle reaja a uma casa decimal específica do ângulo. Após essa cascata de operações condicionais, o estado isolado do registrador de controle (onde $N = 2^n$) torna-se:
 
 \begin{equation}
     \ket{\Psi_{controle}} = \frac{1}{\sqrt{N}} \sum_{s=0}^{N-1} e^{2\pi i s \theta} \ket{s}
@@ -1059,9 +1058,9 @@ O estado resultante no registrador de controle contém a informação do ângulo
 
 Para converter essas frequências ocultas de volta em um número inteiro legível na base computacional, aplica-se a Transformada de Fourier Quântica Inversa ($QFT^{-1}$) sobre o registrador de controle. A $QFT^{-1}$ atua como um decodificador de fases, induzindo um padrão de interferência onde as amplitudes erradas se cancelam (interferência destrutiva) e a probabilidade correta se concentra no estado $\ket{m}$, tal que $m \approx N\theta$.
 
-Ao final do circuito, uma simples medição na base $Z$ do registrador de controle forçará o colapso para o inteiro $m$. Conhecendo o valor de $m$ e a dimensão $N$ do resgistrador, recupera-se o autovalor original através da divisão empírica $\theta = m/N$.
+Ao final do circuito, uma simples medição na base $Z$ do registrador de controle forçará o colapso para o inteiro $m$. Conhecendo o valor de $m$ e a dimensão $N$ do registrador, recupera-se o autovalor original através da divisão empírica $\theta = m/N$.
 
-\subsection{Implementação do algoritmo da Transformada de Estimação de fases}
+\subsection{Implementação do Algoritmo de Estimação de Fases (QPE)}
 
 Para validar empiricamente o formalismo do \textit{Phase Kickback} e da $QFT^{-1}$, implementamos o algoritmo de Estimação de Fases (QPE) utilizando o \textit{framework} Qiskit. O objetivo do experimento foi descobrir uma fase geométrica fracionária, injetada artificialmente em um sistema, utilizando a interferência quântica.
 
@@ -1090,7 +1089,7 @@ circuito_qpe.append(decodificador_qft, range(qubits_leitura))
 circuito_qpe.measure(range(qubits_leitura), range(qubits_leitura))
 \end{lstlisting}
 
-O circuito gerado, demonstrando a aplicação escalonada das portas unitárias controladas e a subsequente decodificação via Transformada de Fourier Inversa, pode ser visualizado na figura \ref{fig:qpe_circuit}.
+O circuito gerado, demonstrando a aplicação escalonada das portas unitárias controladas e a subsequente decodificação via Transformada de Fourier Inversa, pode ser visualizado na Figura \ref{fig:qpe_circuit}.
 
 \begin{figure}[ht]
     \centering
@@ -1099,7 +1098,7 @@ O circuito gerado, demonstrando a aplicação escalonada das portas unitárias c
     \label{fig:qpe_circuit}
 \end{figure}
 
-Ao executar o circuito no \texttt{AerSimulator}, o histograma resultante (figura \ref{fig:qpe_hist}) confirmou a precisão algébrica do algoritmo. O sistema colapsou com $100\%$ de probabilidade para o estado binário \texttt{001}.
+Ao executar o circuito no \texttt{AerSimulator}, o histograma resultante (Figura \ref{fig:qpe_hist}) confirmou a precisão algébrica do algoritmo. O sistema colapsou com $100\%$ de probabilidade para o estado binário \texttt{001}.
 
 \begin{figure}[ht]
     \centering
@@ -1110,7 +1109,7 @@ Ao executar o circuito no \texttt{AerSimulator}, o histograma resultante (figura
 
 Convertendo o vetor de estado medido para a base decimal, obtemos o inteiro $m = 1$. Ao aplicarmos a equação fundamental de resolução do algoritmo, recuperamos a fase com precisão absoluta: $\theta = m/N \implies \theta = 1/8 = 0.125$. Diferente de abordagens estocásticas, o algoritmo decodificou a propriedade global do operador unitário de forma determinística em uma única amostragem eficaz.
 
-\subsection{Complexidade do algoritmo de Estimação de fases}
+\subsection{Complexidade do Algoritmo de Estimação de Fases (QPE)}
 
 A complexidade da Estimação de Fases Quântica (QPE) é determinada pela soma dos recursos de suas duas etapas principais: a aplicação condicional das potências do operador unitário ($U$) e a Transformada de Fourier Quântica Inversa ($QFT^{-1}$).
 
@@ -1125,16 +1124,16 @@ O algoritmo de Shor resolve eficientemente o problema de achar o menor $n$ tal q
     \item O algoritmo de Shor prepara um estado quântico que ``codifica'' essa função periódica. 
     \item A QFT é aplicada a esse estado.
     \item Assim como o prisma encontra as frequências em uma música, a QFT encontra os períodos escondidos nesse estado quântico.
-    \item Ao medir o estado após a QFT, o resultado mais provável que pode-se obter está diretamente relacionado ao período $n$ que é procurado.
+    \item Ao medir o estado após a QFT, o resultado mais provável que se pode obter está diretamente relacionado ao período $n$ que é procurado.
 \end{enumerate}
 
 O cerne do algoritmo não é a fatoração em si, mas a redução do problema de fatoração em um problema de busca de período, que a QFT consegue resolver de forma exponencialmente mais rápida que qualquer método clássico até então conhecido.
 
-\subsection{Implementação do algoritmo de Shor}
+\subsection{Implementação do Algoritmo de Shor}
 
 A implementação prática do algoritmo de Shor revela a sua natureza híbrida. Ele não é executado integralmente no hardware quântico; em vez disso, utiliza o processador quântico como um co-processador especializado para resolver o gargalo computacional do problema: a busca pelo período (função modular). O algoritmo é dividido em três etapas fundamentais.
 
-A primeira etapa, puramente clássica, consiste na escolha de um palpite $a$ coprimo ao número $N$ que se deseja fatorar. Para a nossa demonstração, escolhemos fatorar $N = 15$ utilizando o palpite $f(x) = a^x \pmod N$ classicamente, essa função gera uma sequência cíclica, cujo comportamento periódico pode ser visualizado na figura \ref{fig:periodo_shor}.
+A primeira etapa, puramente clássica, consiste na escolha de um palpite $a$ coprimo ao número $N$ que se deseja fatorar. Para a nossa demonstração, escolhemos fatorar $N = 15$ utilizando o palpite $a = 7$. A função modular $f(x) = a^x \pmod N$ gera classicamente uma sequência cíclica, cujo comportamento periódico pode ser visualizado na Figura \ref{fig:periodo_shor}.
 
 \begin{figure}[ht]
     \centering
@@ -1194,15 +1193,15 @@ if periodo_r % 2 == 0:
     print(f"Fatores de {numero_N}: {fator_1} e {fator_2}")
 \end{lstlisting}
 
-A terceira e última etapa ocorre após a medição quântica. O hardware retorna estados binários (como \texttt{0100} ou \texttt{1100}) que correspondem a frações decimais da fase (ex: $0.25 ou 0.75$). Através do algoritmo clássico de Frações Contínuas (\texttt{limit\_denominator}), o denominador da fração mais simples é extraído, revelando de forma determinística o período $r = 4$. Com esse período, sendo ele par, aplica-se a fórmula matemática de Euclides, resultando no cálculo bem-sucedido dos fatores primos $3$ e $5$, quebrando com sucesso a criptografia do número $15$.
+A terceira e última etapa ocorre após a medição quântica. O hardware retorna estados binários (como \texttt{0100} ou \texttt{1100}) que correspondem a frações decimais da fase (por exemplo, $0{,}25$ ou $0{,}75$). Através do algoritmo clássico de Frações Contínuas (\texttt{limit\_denominator}), o denominador da fração mais simples é extraído, revelando de forma determinística o período $r = 4$. Com esse período, sendo ele par, aplica-se a fórmula matemática de Euclides, resultando no cálculo bem-sucedido dos fatores primos $3$ e $5$, quebrando com sucesso a criptografia do número $15$.
 
-\subsection{Complexidade do algoritmo de Shor}
+\subsection{Complexidade do Algoritmo de Shor}
 
 O algoritmo de Shor consolida a supremacia quântica ao resolver o problema de fatoração de inteiros em tempo polinomial. Classicamente, o algoritmo mais eficiente conhecido é o \textit{General Number Field Sieve} (GNFS), que opera em tempo super-polinomial: $\mathcal{O}\left(\exp\left(c (\log N)^{1/3} (\log \log N)^{2/3}\right)\right)$. Na prática, isso torna a fatoração de chaves criptográficas (como o RSA de 2048 bits) um problema intratável para a arquitetura clássica.
 
 A abordagem de Shor converte a fatoração no problema de busca do período $r$ da função modular $f(x) = a^x \pmod{N}$, utilizando a sub-rotina QPE. O processamento puramente clássico de pré e pós-processamento (como o Máximo Divisor Comum via algoritmo de Euclides e as frações contínuas) possui complexidade polinomial suportável de $\mathcal{O}(n^3)$, onde $n = \log N$ é o número de bits para representar o inteiro $N$.
 
-O gargalo computacional recai sobre a implementação em nível de portas lógicas do operador unitário de exponenciação modular controlada no hardware quântico. Através de métodos eficientes de multiplicação e adição modular repetida, essa operação inteira pode ser construída utilizando $\mathcal{O}(n^3)$ portas lógicas universais \cite{nielsen2010}. Somada à QFT no registrador de medição $\mathcal{O}(n^2)$, a complexidade geral do Algoritmo de Shor é assintoticamente limitada a $\mathcal{O}(n^3)$. Esta drástica redução de super-polinomial para polinomial é o que fundamenta a futura ameaça quântica à criptografia moderna.
+O gargalo computacional recai sobre a implementação em nível de portas lógicas do operador unitário de exponenciação modular controlada no hardware quântico. Através de métodos eficientes de multiplicação e adição modular repetida, essa operação inteira pode ser construída utilizando $\mathcal{O}(n^3)$ portas lógicas universais \cite{nielsen2010}. Somada à complexidade da QFT no registrador de medição ($\mathcal{O}(n^2)$), a complexidade geral do Algoritmo de Shor é assintoticamente limitada a $\mathcal{O}(n^3)$. Esta drástica redução de super-polinomial para polinomial é o que fundamenta a futura ameaça quântica à criptografia moderna.
 
 \section{Pesquisas Futuras e Algoritmos de Consulta}
 
