@@ -367,7 +367,7 @@ Os autovetores de um operador de medição representam os únicos estados defini
 Pensando na base computacional $\ket{0}$ e $\ket{1}$, tais são os autovetores do operador de medição Pauli-Z (que mede o spin na direção Z). Isso significa que, não importa qual seja a superposição inicial do qubit, quando é medido nesta base, ele é forçado a escolher uma das direções (autovetores). O resultado tem que ser ou $\ket{0}$
 ou $\ket{1}$.
 
-O autovalor associado a cada autovetor é o valor numérico real que a medição registra. É o estado final, o autovalor é o número anotado. Por exemplo, para o operador de medição Pauli-Z, o autovetor $\ket{1}$ tem o autovalor $+1$, enquanto que o autovetor $\ket{0}$ tem o autovalor $-1$. 
+O autovalor associado a cada autovetor é o valor numérico real que a medição registra. É o estado final, o autovalor é o número anotado. Por exemplo, para o operador de medição Pauli-Z, o autovetor $\ket{0}$ tem o autovalor $+1$, enquanto que o autovetor $\ket{1}$ tem o autovalor $-1$. 
 
 \subsection{Portas lógicas quânticas}
 São os operadores unitários. 
@@ -654,7 +654,7 @@ A análise dos quatro estados implementados demonstra a versatilidade do Qiskit 
 
 \subsection{Desigualdade CHSH e a violação do Realismo Local}
 
-A criação matemática dos estados de Bell demonstra o fenômeno do emaranhamento, mas a comprovação de que essas correlações não podem ser explicadas por teorias clássicas de variáveis ocultas locais é dada pela desigualdade CHSH (Clauser-Horne-Shimony-Holt), uma generalização do Teorema de Bell.
+A criação matemática dos estados de Bell demonstra o fenômeno do emaranhamento, mas a comprovação de que essas correlações não podem ser explicadas por teorias clássicas de variáveis ocultas locais é dada pela desigualdade CHSH (Clauser-Horne-Shimony-Holt) \cite{clauser1969proposed}, uma generalização do Teorema de Bell.
 
 O teste CHSH considera duas partículas emaranhadas distribuídas para dois observadores (Alice e Bob). Eles realizam medições em bases rotacionadas independentes. Alice escolhe entre as bases $A$ e $A'$, enquanto Bob escolhe entre $B$ e $B'$. A correlação entre as medições é dada pelo valor esperado $E(\theta_a, \theta_b)$. O parâmetro $S$ de CHSH é definido como:
 
@@ -688,7 +688,7 @@ Através da simulação utilizando o \texttt{AerSimulator}, com 8192 \textit{sho
 
 \subsection{Implementação do Estado GHZ}
 
-Expandindo os conceitos de emaranhamento explorados nos estados de Bell, o estado GHZ (Greenberger-Horne-Zeilinger) representa o emaranhamento de três ou mais subsistemas. Para um sistema de três qubits, o estado é definido como $\ket{GHZ} = \frac{1}{\sqrt{2}}(\ket{000} + \ket{111})$.
+Expandindo os conceitos de emaranhamento explorados nos estados de Bell, o estado GHZ (Greenberger-Horne-Zeilinger) \cite{greenberger1989going} representa o emaranhamento de três ou mais subsistemas. Para um sistema de três qubits, o estado é definido como $\ket{GHZ} = \frac{1}{\sqrt{2}}(\ket{000} + \ket{111})$.
 
 A construção deste estado segue uma lógica análoga à do estado $\ket{\Phi^+}$. Inicia-se aplicando uma porta Hadamard ao primeiro qubit, criando uma superposição inicial. Em seguida, utilizam-se as portas CNOT em cascata para propagar esse estado para os qubits adjacentes.
 
@@ -769,7 +769,7 @@ A simulação estatística deste circuito confirma a teoria: as medições retor
 
 \section{Algoritmo de Grover}
 
-O algoritmo de Grover é o principal algoritmo quântico para busca em dados não estruturados \cite{nielsen2010}. Inicia-se com uma superposição de todas as possibilidades. Grover aumenta a probabilidade (amplitude) da resposta correta e diminui a probabilidade das respostas erradas. Isso é feito através de um processo geométrico. Sejam dois vetores:
+O algoritmo de Grover, proposto por Lov Grover em 1996 \cite{grover1996fast, nielsen2010}, é o principal algoritmo quântico para busca em dados não estruturados. Inicia-se com uma superposição de todas as possibilidades. Grover aumenta a probabilidade (amplitude) da resposta correta e diminui a probabilidade das respostas erradas. Isso é feito através de um processo geométrico. Sejam dois vetores:
 \begin{enumerate}
     \item $\ket{\omega}$: o estado alvo que queremos encontrar.
     \item $\ket{s}$: o estado de superposição uniforme (média de todos os estados).
@@ -825,9 +825,9 @@ O uso de ancillas impõe uma restrição fundamental: a necessidade de \textbf{d
 
 \subsection{O Difusor e a reflexão de Householder}
 
-Após a marcação pelo oráculo, o algoritmo aplica o operador de difusão de Grover, denotado por $U_s$. Enquanto o oráculo marca a solução alterando sua fase geométrica, o difusor redistribui as amplitudes de probabilidade do sistema, realizando a chamada "inversão sobre a média".
+Após a marcação pelo oráculo, o algoritmo aplica o operador de difusão de Grover, denotado por $U_s$. Enquanto o oráculo marca a solução alterando sua fase geométrica, o difusor redistribui as amplitudes de probabilidade do sistema, realizando a chamada ``inversão sobre a média''.
 
-A estrutura matemática do difusor é intrinsecamente ligada ao conceito de \textbf{Reflexão de Householder} da álgebra linear. Uma transformação de Householder reflete um vetor no espaço em relação a um plano ortogonal a um dado vetor normal. O difusor $U_s$ pode ser interpretado como uma reflexão do vetor de estado do sistema em torno do estado de superposição uniforme $\ket{s}$. É construído a partir do operador de inversão ao redor do estado zero $U_O = \mathbb{I} -  2\ket{0}\bra{0}$, conjugado por portas Hadamard:
+A estrutura matemática do difusor é intrinsecamente ligada ao conceito de \textbf{Reflexão de Householder} da álgebra linear. Uma transformação de Householder reflete um vetor no espaço em relação a um plano ortogonal a um dado vetor normal. O difusor $U_s$ pode ser interpretado como uma reflexão do vetor de estado do sistema em torno do estado de superposição uniforme $\ket{s}$. É construído a partir do operador de inversão ao redor do estado zero $U_0 = \mathbb{I} - 2\ket{0}\bra{0}$, conjugado por portas Hadamard:
 
 \begin{equation}
     U_s = H^{\otimes n} (\mathbb{I} - 2\ket{0}\bra{0}) H^{\otimes n} = 2\ket{s}\bra{s} - \mathbb{I}
@@ -835,7 +835,7 @@ A estrutura matemática do difusor é intrinsecamente ligada ao conceito de \tex
 
 A operação $U_0 \ket{x}$ atua preservando o estado se $x \neq 0$ e invertendo seu sinal se $x = 0$ ($-\ket{0}$). 
 
-A essência geométrica do algoritmo de Grover reside na combinação destas duas reflexões sequenciais: a primeira pelo oráculo $(U_\omega)$ e a segunda pelo difusor $(U_s)$. O produto de duas reflexões no plano bidimensional gerado por $\ket{\omega}$ e o estado ortogonal a ele resulta em uma \textbf{rotação pura}. A cada iteração de Grover, o vetor de estado do sistema é rotacionado em direção ao estado alvo $\ket{\omega}$, amplificando progressivamente sua probabilidade de medição de forma exponencialmente mais rápida que qualquer método de busca exaustiva clássico.
+A essência geométrica do algoritmo de Grover reside na combinação destas duas reflexões sequenciais: a primeira pelo oráculo $(U_\omega)$ e a segunda pelo difusor $(U_s)$. O produto de duas reflexões no plano bidimensional gerado por $\ket{\omega}$ e o estado ortogonal a ele resulta em uma \textbf{rotação pura}. A cada iteração de Grover, o vetor de estado do sistema é rotacionado em direção ao estado alvo $\ket{\omega}$, amplificando progressivamente sua probabilidade de medição com uma aceleração quadrática em relação a qualquer método de busca exaustiva clássico.
 
 \subsection{Implementação do Algoritmo de Grover}
 
@@ -880,7 +880,7 @@ circuito_grover.measure([0, 1, 2, 3], [0, 1, 2, 3])
 
 A superioridade do algoritmo de Grover reside na sua aceleração quadrática em relação a qualquer algoritmo clássico de busca não estruturada. Classicamente, para encontrar um item específico em uma lista não ordenada de $N$ elementos, o pior cenário exige a verificação de todos os itens, resultando em uma complexidade de tempo $\mathcal{O}(N)$. Em média, são necessárias $N/2$ consultas ao banco de dados.
 
-Quanticamente, a complexidade é analisada pelo número de vezes que o oráculo $U_\omega$ precisa ser invocado. Geometricamente, o estado inicial de superposição uniforme $\ket{s}$ possui um ângulo inicial $\theta \approx 2/\sqrt{N}$ em relação ao plano ortogonal ao estado alvo $\ket{\omega}$. Como cada iteração de Grover (Oráculo + Difusor) rotaciona o vetor de estado em $2\theta$, o número de iterações necessárias para alinhar o vetor o mais próximo possível do eixo vertical $\ket{\omega}$ (rotação total de $\pi/2$) é assintoticamente dado por $\frac{\pi}{4}\sqrt{N}$.
+Quanticamente, a complexidade é analisada pelo número de vezes que o oráculo $U_\omega$ precisa ser invocado. Geometricamente, o estado inicial de superposição uniforme $\ket{s}$ forma um pequeno ângulo $\theta/2 \approx 1/\sqrt{N}$ com o plano ortogonal ao estado alvo $\ket{\omega}$. Como cada iteração de Grover (Oráculo + Difusor) rotaciona o vetor de estado por um ângulo fixo de $\theta \approx 2/\sqrt{N}$ em direção a $\ket{\omega}$, o número de iterações necessárias para que o vetor atinja o eixo de $\ket{\omega}$ (uma rotação total de $\approx \pi/2$) é assintoticamente dado por $R \approx \frac{\pi/2}{\theta} \approx \frac{\pi}{4}\sqrt{N}$ \cite{grover1996fast, nielsen2010}.
 
 Portanto, a complexidade temporal do algoritmo de Grover é $\mathcal{O}(\sqrt{N})$ \cite{nielsen2010}. Para um espaço de busca de 1 milhão de itens ($N = 10^6$), enquanto um computador clássico faria cerca de 500.000 consultas, um computador quântico encontraria a resposta com certeza probabilística em apenas $\approx 785$ consultas. 
 
@@ -888,7 +888,7 @@ Portanto, a complexidade temporal do algoritmo de Grover é $\mathcal{O}(\sqrt{N
 
 \subsection{O Problema da Colisão em Funções 2-para-1}
 
-Proposto por Gilles Brassard, Peter Høyer e Alain Tapp em 1997, o algoritmo BHT resolve o \textit{Problema da Colisão} (\textit{Collision Problem}) \cite{nielsen2010}. Dada uma função $f: \{0, \dots, N-1\} \to \{0, \dots, N/2 - 1\}$ que é $2$-para-$1$ (cada imagem $y$ possui exatamente duas pré-imagens distintas $x_1 \neq x_2$ tais que $f(x_1) = f(x_2)$), o objetivo consiste em identificar um par de colisão $(x_1, x_2)$. Esse problema fundamenta a análise de segurança de funções de \textit{hash} criptográficas e esquemas de assinatura digital. Classicamente, a melhor abordagem probabilística baseada no Paradoxo do Aniversário requer $\mathcal{O}(\sqrt{N}) = \mathcal{O}(N^{1/2})$ consultas à função para encontrar uma colisão com alta probabilidade.
+Proposto por Gilles Brassard, Peter H{\o}yer e Alain Tapp em 1997 \cite{brassard1997quantum}, o algoritmo BHT resolve o \textit{Problema da Colisão} (\textit{Collision Problem}) \cite{nielsen2010}. Dada uma função $f: \{0, \dots, N-1\} \to \{0, \dots, N/2 - 1\}$ que é $2$-para-$1$ (cada imagem $y$ possui exatamente duas pré-imagens distintas $x_1 \neq x_2$ tais que $f(x_1) = f(x_2)$), o objetivo consiste em identificar um par de colisão $(x_1, x_2)$. Esse problema fundamenta a análise de segurança de funções de \textit{hash} criptográficas e esquemas de assinatura digital. Classicamente, a melhor abordagem probabilística baseada no Paradoxo do Aniversário requer $\mathcal{O}(\sqrt{N}) = \mathcal{O}(N^{1/2})$ consultas à função para encontrar uma colisão com alta probabilidade.
 
 \subsection{A Estratégia Híbrida e a Construção do Oráculo BHT}
 
@@ -992,7 +992,7 @@ Portanto, a QFT demonstra seu poder não no processamento de dados brutos, mas n
 A eficiência da QFT deriva da constatação de que a somatória de Fourier pode ser fatorada analiticamente em um produto tensorial de estados independentes para cada qubit. O circuito requer apenas duas ferramentas:
 \begin{enumerate}
     \item \textbf{Portas Hadamard (H):} Criar a superposição inicial.
-    \item \textbf{Portas de Fase Controlada ($R_k$):} Aplicam rotações fracionárias da fase relativa. A matriz de rotação é $R_k = \text{diag}(1, e^2\pi i / 2^k)$.
+    \item \textbf{Portas de Fase Controlada ($R_k$):} Aplicam rotações fracionárias da fase relativa. A matriz de rotação é $R_k = \text{diag}(1, e^{2\pi i / 2^k})$.
 \end{enumerate}
 
 \subsection{A Necessidade das Portas SWAP: Uma Prova Algébrica} 
@@ -1011,6 +1011,15 @@ No entanto, a compilação teórica das portas de rotação $H$ e $R_k$ sem corr
 
 Observa-se uma anomalia geométrica: a amplitude $-i$, que pertence ao estado $\ket{1}$ (binário 01), foi alocada no estado $\ket{10}$ (decimal 2). Para alinhar o \textit{output} físico à convenção matemática clássica, é mandatório aplicar portas unitárias \texttt{SWAP} ao final do circuito para inverter a ordem espacial dos qubits.
 
+A topologia geral do circuito da QFT para múltiplos qubits, incorporando a cascata de portas de fase controlada e as portas unitárias \texttt{SWAP} finais, é ilustrada na Figura \ref{fig:qft_circuit}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.85\linewidth]{images/qft_circuit.png}
+    \caption{Estrutura do circuito quântico da Transformada de Fourier Quântica (QFT), destacando as portas Hadamard $H$, as rotações de fase controlada $R_k$ e as portas SWAP finais para reversão da ordem dos qubits.}
+    \label{fig:qft_circuit}
+\end{figure}
+
 \subsection{Complexidade do Algoritmo da Transformada de Fourier Quântica (QFT)}
 
 A eficiência da QFT é o motor por trás da aceleração exponencial em algoritmos de busca de período. Para processar um vetor de estado de $N = 2^n$ amplitudes (onde $n$ é o número de qubits), o melhor algoritmo clássico, a Transformada Rápida de Fourier (FFT), requer $\mathcal{O}(N \log N)$ operações. Substituindo $N$, a complexidade clássica escala como $\mathcal{O} (n 2^n)$, um crescimento exponencial em função do número de bits.
@@ -1021,7 +1030,7 @@ Essa progressão aritmética resulta em uma contagem exata de portas dada por $\
 
 \section{Algoritmo de Estimação de Fases (QPE)}
 
-A Estimação de Fases Quântica (QPE - \textit{Quantum Phase Estimation}) é uma das sub-rotinas mais cruciais da computação quântica. Ela atua como a ponte entre a manipulação de fases abstratas e a extração de dados clássicos mensuráveis.
+A Estimação de Fases Quântica (QPE - \textit{Quantum Phase Estimation}), introduzida originalmente por Alexei Kitaev \cite{kitaev1995quantum}, é uma das sub-rotinas mais cruciais da computação quântica. Ela atua como a ponte entre a manipulação de fases abstratas e a extração de dados clássicos mensuráveis.
 
 O problema fundamental que a QPE resolve é o seguinte: dado um operador unitário $U$ e um estado quântico $\ket{\Psi}$ que é autovetor desse operador, desejamos encontrar o autovalor associado. Como $U$ é unitário e preserva a conservação da probabilidade, o seu autovalor deve obrigatoriamente ter módulo 1. Pela fórmula de Euler, podemos escrever esse autovalor estritamente como uma fase complexa:
 
@@ -1046,7 +1055,7 @@ Ao aplicarmos o operador $U$ condicionado a um qubit do registrador de controle,
 
 Para obter a leitura exata de $\theta$ em formato binário fracionário, um único evento de \textit{kickback} é insuficiente. O algoritmo QPE aplica o operador $U$ em potências sucessivas de base 2 ($U^1, U^2, U^4, \dots, U^{2^{n-1}}$), condicionando cada potência a um dos $n$ qubits distintos do registrador de controle.
 
-Ao elevar o operador a uma potência $k$, o autovalor associado é matematicamente elevado à mesma potência: $U^k\ket{\Psi} = e^{2\pi i \theta}\ket{\Psi}$. Esse processo ``fatia'' a fase $\theta$, permitindo que cada qubit de controle reaja a uma casa decimal específica do ângulo. Após essa cascata de operações condicionais, o estado isolado do registrador de controle (onde $N = 2^n$) torna-se:
+Ao elevar o operador a uma potência $k$, o autovalor associado é matematicamente elevado à mesma potência: $U^k\ket{\Psi} = (e^{2\pi i \theta})^k\ket{\Psi} = e^{2\pi i k \theta}\ket{\Psi}$. Esse processo ``fatia'' a fase $\theta$, permitindo que cada qubit de controle reaja a uma casa decimal específica do ângulo. Após essa cascata de operações condicionais, o estado isolado do registrador de controle (onde $N = 2^n$) torna-se:
 
 \begin{equation}
     \ket{\Psi_{controle}} = \frac{1}{\sqrt{N}} \sum_{s=0}^{N-1} e^{2\pi i s \theta} \ket{s}
@@ -1119,12 +1128,12 @@ Logo, a QPE requer $\mathcal{O}(t^2)$ portas lógicas de rotina geométrica e ex
 
 \section{Algoritmo de Shor}
 
-O algoritmo de Shor resolve eficientemente o problema de achar o menor $n$ tal que $a^n \equiv 1 \pmod{b}$, que no fundo é um problema de encontrar um período. É procurado um período $n$ de uma função matemática.
+O algoritmo proposto por Peter Shor em 1994 \cite{shor1994algorithms, nielsen2010} resolve eficientemente o problema de determinar a ordem modular, isto é, achar o menor inteiro positivo $r$ tal que $a^r \equiv 1 \pmod{N}$, que no fundo equivale a encontrar o período da função modular $f(x) = a^x \pmod N$.
 \begin{enumerate}
     \item O algoritmo de Shor prepara um estado quântico que ``codifica'' essa função periódica. 
     \item A QFT é aplicada a esse estado.
     \item Assim como o prisma encontra as frequências em uma música, a QFT encontra os períodos escondidos nesse estado quântico.
-    \item Ao medir o estado após a QFT, o resultado mais provável que se pode obter está diretamente relacionado ao período $n$ que é procurado.
+    \item Ao medir o estado após a QFT, o resultado mais provável que se pode obter está diretamente relacionado ao período $r$ que é procurado.
 \end{enumerate}
 
 O cerne do algoritmo não é a fatoração em si, mas a redução do problema de fatoração em um problema de busca de período, que a QFT consegue resolver de forma exponencialmente mais rápida que qualquer método clássico até então conhecido.
@@ -1193,6 +1202,15 @@ if periodo_r % 2 == 0:
     print(f"Fatores de {numero_N}: {fator_1} e {fator_2}")
 \end{lstlisting}
 
+O circuito quântico modular montado no Qiskit para a fatoração de $N = 15$ é ilustrado na Figura \ref{fig:shor_circuit}, exibindo os quatro qubits de contagem, os quatro qubits de trabalho (alvo), os operadores unitários de exponenciação modular controlada e o bloco de decodificação via $QFT^{-1}$.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/shor_circuit.png}
+    \caption{Circuito quântico para busca de período no Algoritmo de Shor ($N=15$, $a=7$), integrando a preparação em superposição, as portas modulares controladas $U^{2^j}$ e a Transformada de Fourier Quântica Inversa ($QFT^{-1}$).}
+    \label{fig:shor_circuit}
+\end{figure}
+
 A terceira e última etapa ocorre após a medição quântica. O hardware retorna estados binários (como \texttt{0100} ou \texttt{1100}) que correspondem a frações decimais da fase (por exemplo, $0{,}25$ ou $0{,}75$). Através do algoritmo clássico de Frações Contínuas (\texttt{limit\_denominator}), o denominador da fração mais simples é extraído, revelando de forma determinística o período $r = 4$. Com esse período, sendo ele par, aplica-se a fórmula matemática de Euclides, resultando no cálculo bem-sucedido dos fatores primos $3$ e $5$, quebrando com sucesso a criptografia do número $15$.
 
 \subsection{Complexidade do Algoritmo de Shor}
@@ -1210,9 +1228,9 @@ O presente trabalho consolidou os fundamentos matemáticos e a prática computac
 Entre as vertentes teóricas mais promissoras para investigações futuras, destacam-se:
 
 \begin{enumerate}[label=\textbf{\arabic*.}]
-    \item \textbf{Algoritmo de Simon (Periodicidade sob XOR):} Formulado por Daniel Simon em 1994, este algoritmo é historicamente considerado o elo conceitual que inspirou Peter Shor. Dada uma função caixa-preta $f: \{0,1\}^n \to \{0,1\}^n$ com a promessa de que $f(x \oplus s) = f(x)$ para uma string oculta $s$, o algoritmo quântico identifica o período $s$ com apenas $\mathcal{O}(n)$ consultas, em contraste com a barreira clássica exponencial de $\mathcal{O}(2^{n/2})$ \cite{nielsen2010}. A futura implementação deste protocolo fornecerá uma base didática direta sobre como a amostragem em superposição linear resolve problemas de subgrupos ocultos abelianos.
+    \item \textbf{Algoritmo de Simon (Periodicidade sob XOR):} Formulado por Daniel Simon em 1994 \cite{simon1997power}, este algoritmo é historicamente considerado o elo conceitual que inspirou Peter Shor. Dada uma função caixa-preta $f: \{0,1\}^n \to \{0,1\}^n$ com a promessa de que $f(x \oplus s) = f(x)$ para uma string oculta $s$, o algoritmo quântico identifica o período $s$ com apenas $\mathcal{O}(n)$ consultas, em contraste com a barreira clássica exponencial de $\mathcal{O}(2^{n/2})$ \cite{nielsen2010}. A futura implementação deste protocolo fornecerá uma base didática direta sobre como a amostragem em superposição linear resolve problemas de subgrupos ocultos abelianos.
     
-    \item \textbf{Contagem Quântica (\textit{Quantum Counting}):} Proposta por Brassard, H{\o}yer e Tapp em 1998, consiste na união direta de dois algoritmos desenvolvidos nesta iniciação científica: o operador de difusão de Grover e a Estimação de Fase Quântica (QPE). Ao tratar a iteração de Grover como um operador unitário e aplicar a QPE sobre seus autovetores, é possível estimar com alta precisão o número exato $M$ de soluções existentes no espaço de busca em tempo $\mathcal{O}(\sqrt{N/M})$. Essa técnica é essencial para automatizar a busca de Grover quando a quantidade de alvos não é previamente conhecida.
+    \item \textbf{Contagem Quântica (\textit{Quantum Counting}):} Proposta por Brassard, H{\o}yer e Tapp em 1998 \cite{brassard2002quantum}, consiste na união direta de dois algoritmos desenvolvidos nesta iniciação científica: o operador de difusão de Grover e a Estimação de Fase Quântica (QPE). Ao tratar a iteração de Grover como um operador unitário e aplicar a QPE sobre seus autovetores, é possível estimar com alta precisão o número exato $M$ de soluções existentes no espaço de busca em tempo $\mathcal{O}(\sqrt{N/M})$. Essa técnica é essencial para automatizar a busca de Grover quando a quantidade de alvos não é previamente conhecida.
     
     \item \textbf{Problema de Elementos Distintos e Caminhadas Quânticas (\textit{Quantum Walks}):} Como extensão natural do algoritmo BHT, o problema de verificar se todos os elementos de uma lista são distintos (identificando colisões arbitrárias) foi solucionado de forma ótima por Andris Ambainis utilizando caminhadas quânticas em grafos de Johnson. O estudo deste formalismo permitirá expandir a análise para além do modelo padrão de circuitos de portas lógicas, adentrando a dinâmica de caminhadas quânticas contínuas e discretas.
     
