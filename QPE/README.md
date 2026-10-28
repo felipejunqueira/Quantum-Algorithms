@@ -40,8 +40,7 @@ $$|2^t \theta\rangle$$
 In the [`QPE_Algorithm.py`](./QPE_Algorithm.py) script, we implement a system with:
 * **$t = 3$ readout qubits** in the control register (allowing phase estimation with up to $1/2^3 = 1/8 = 0.125$ precision).
 * **1 target qubit** initialized to eigenvector $|1\rangle$ (via a Pauli-X gate).
-* **Secret Phase $\theta = 1/8$** ($0.125$) applied via controlled phase rotations $CP(\theta)$ with angle:
-  $$\phi = 2\pi\theta = \frac{\pi}{4}$$
+* **Secret Phase $\theta = 1/8$** ($0.125$) applied via controlled phase rotations $CP(\theta)$ with angle $\phi = 2\pi\theta = \frac{\pi}{4}$.
 
 Since the target is in the state $|1\rangle$, it acts as the eigenvector of the phase operator $P(\phi)$ with eigenvalue $e^{i\phi} = e^{2\pi i (1/8)}$.
 

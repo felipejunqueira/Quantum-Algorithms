@@ -15,7 +15,7 @@ Graphically, the algorithm operates as a **geometric rotation** of the quantum s
 ### A. The Oracle ($U_\omega$)
 The Oracle rotates only the phase of the target state $|\omega\rangle$, leaving all other states unaltered:
 
-$$|x\rangle \mapsto \begin{cases} -|x\rangle & \text{if } x = \omega \\ \ \ \ |x\rangle & \text{if } x \neq \omega \end{cases}$$
+$$|x\rangle \mapsto \begin{cases} -|x\rangle & \text{if } x = \omega \\ \phantom{-}|x\rangle & \text{if } x \neq \omega \end{cases}$$
 
 ### B. The Diffuser ($U_s$)
 The Diffuser (or inversion about the mean operator) performs a reflection around the uniform superposition state $|s\rangle$. It amplifies the probability amplitude of the state that was marked negatively by the Oracle, while simultaneously reducing the amplitude of all incorrect states.
@@ -26,6 +26,7 @@ Unlike classical computing where we can search indefinitely, Grover's Algorithm 
 $$R \approx \frac{\pi}{4}\sqrt{N}$$
 
 For $N = 16$ states:
+
 $$R \approx \frac{\pi}{4}\sqrt{16} = \pi \approx 3 \text{ iterations}$$
 
 ---

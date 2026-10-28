@@ -13,6 +13,7 @@ The QFT performs a linear transformation on qubits that maps the computational b
 $$|j\rangle \mapsto \frac{1}{\sqrt{N}} \sum_{k=0}^{N-1} \omega^{j k} |k\rangle$$
 
 Where $\omega$ is the $N$-th root of unity:
+
 $$\omega = e^{\frac{2\pi i}{N}}$$
 
 ### Product State Decomposition
@@ -21,6 +22,7 @@ For implementation in circuits, the QFT can be written extremely elegantly as a 
 $$|j_1 j_2 \dots j_n\rangle \mapsto \frac{1}{\sqrt{2^n}} \left(|0\rangle + e^{2\pi i 0.j_n}|1\rangle\right) \otimes \left(|0\rangle + e^{2\pi i 0.j_{n-1}j_n}|1\rangle\right) \otimes \dots \otimes \left(|0\rangle + e^{2\pi i 0.j_1j_2\dots j_n}|1\rangle\right)$$
 
 Where the binary fractional notation $0.j_1 j_2 \dots j_n$ represents:
+
 $$0.j_1 j_2 \dots j_n = \sum_{l=1}^{n} j_l 2^{-l}$$
 
 > [!NOTE]  
@@ -47,8 +49,7 @@ The circuit was built recursively and modularly in the [`QFT_Algorithm.py`](./QF
 ### A. Controlled Phase Rotations (`qft_rotations`)
 For each qubit $n$, we apply:
 1. A Hadamard ($H$) gate to create the initial superposition.
-2. Controlled fractional Phase gates ($CP(\theta)$ or $R_k$) with the remaining qubits in the register, where the rotation angle is given by:
-   $$\theta = \frac{\pi}{2^{n - \text{qubit}}}$$
+2. Controlled fractional Phase gates ($CP(\theta)$ or $R_k$) with the remaining qubits in the register, where the rotation angle is given by $\theta = \frac{\pi}{2^{n - \text{qubit}}}$.
 
 ### B. Geometric Correction (`swap_qubits`)
 When expanding the QFT product state equation, the phase coefficients result in an inverted order relative to the physical qubit indices (a phenomenon known as **Bit-Reversal**).

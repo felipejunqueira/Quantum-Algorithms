@@ -34,10 +34,7 @@ graph TD
 ### A. Classical Reduction to Period Finding
 1. Choose a random integer $a$ such that $1 < a < N$.
 2. Compute $\gcd(a, N)$ using Euclid's algorithm. If $\gcd(a, N) > 1$, a non-trivial factor is already found.
-3. Otherwise, consider the periodic modular function:
-   $$f(x) = a^x \pmod{N}$$
-   The **order (or period) $r$** is the smallest positive integer such that:
-   $$a^r \equiv 1 \pmod{N}$$
+3. Otherwise, consider the periodic modular function $f(x) = a^x \pmod{N}$. The **order (or period) $r$** is the smallest positive integer such that $a^r \equiv 1 \pmod{N}$.
 
 ### B. Periodic Sequence Illustration ($N = 15, a = 7$)
 For $N = 15$ and $a = 7$:

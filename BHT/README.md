@@ -15,6 +15,7 @@ The algorithm randomly picks $M = \lceil N^{1/3} \rceil$ inputs and stores the p
 
 ### B. Quantum Oracle Construction ($V = F^\dagger U F$)
 If no collision is found in the sample, Grover's search is configured across the full space of $N$ states to locate a collision partner. The unitary oracle $V$ is modularly decomposed as:
+
 $$V = F^\dagger U F$$
 
 where:
@@ -24,6 +25,7 @@ where:
 
 ### C. Grover Iterations and Query Complexity
 With $M = N^{1/3}$ marked targets in domain $N$, the optimal number of Grover iterations is:
+
 $$R \approx \frac{\pi}{4}\sqrt{\frac{N}{M}} = \frac{\pi}{4}\sqrt{\frac{N}{N^{1/3}}} = \mathcal{O}(N^{1/3})$$
 
 Total queries: Classical ($N^{1/3}$) + Quantum ($N^{1/3}$) = **$\mathcal{O}(N^{1/3})$**, establishing the theoretical lower bound for black-box collision finding.
