@@ -8,6 +8,7 @@
 *.log
 *.out
 *.pdf
+!Projeto_Oficial_IC.pdf
 *.run.xml
 *.synctex.gz
 *.toc

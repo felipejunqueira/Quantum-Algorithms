@@ -3,6 +3,11 @@
 This repository brings together clean, modular, and richly documented implementations of fundamental concepts in **Quantum Mechanics** and **Quantum Algorithms**. Developed originally as expository and practical material for **Undergraduate Research (IC)**, the project utilizes the open-source **Qiskit** (v1.x) framework to simulate quantum circuits and explore qubit behavior.
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1kZGYeHcZ014jM8A2tuBPwZPFd99C_N-d?usp=sharing)
+[![Official IC Project](https://img.shields.io/badge/Official%20Research%20Report-PDF-red?logo=adobeacrobatreader)](./Projeto_Oficial_IC.pdf)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+> [!NOTE]  
+> 📄 **Official Academic Monograph:** For the complete theoretical framework, analytical derivations, and full research report, access the [📄 Projeto Oficial de Iniciação Científica (PDF)](./Projeto_Oficial_IC.pdf).
 
 ---
 
@@ -13,9 +18,9 @@ The table below presents a summary of everything implemented in the repository. 
 | Module | Quantum Algorithms / Concepts | Main Files | Status and Visual Results |
 | :--- | :--- | :--- | :--- |
 | 🔔 **[EstadoBell](./EstadoBell)** | Maximal Entanglement, Bell States ($\vert\Phi^{\pm}\rangle$, $\vert\Psi^{\pm}\rangle$), GHZ State, Controlled Bell, and CHSH Inequality. | `FirstBellState.py` <br> `GHZState.py` <br> `CHSH_Inequality.py` | ✅ Circuits, Histograms, and Numerical Proof of Non-Locality ($S \approx 2.82$). |
-| 🔍 **[Grover](./Grover)** | Quantum unstructured search with quadratic speedup ($\mathcal{O}(\sqrt{N})$), phase Oracle, and Diffuser. | `GroverAlgorithm.py` | ✅ Amplitude amplification of $\vert\omega\rangle = \vert0101\rangle$ with success > 95%. |
+| 🔍 **[Grover](./Grover)** | Quantum unstructured search with quadratic speedup ($\mathcal{O}(\sqrt{N})$), phase Oracle, and Diffuser. | `GroverAlgorithm.py` | ✅ Amplitude amplification of $\vert\omega\rangle = \vert0101\rangle$ with success $> 95\%$. |
 | 🔄 **[QFT](./QFT)** | Quantum Fourier Transform, phase mapping, controlled fractional rotations, and bit-reversal correction. | `QFT_Algorithm.py` | ✅ Phase encoding and geometric correction via `SWAP` gates analyzed on state $\vert3\rangle$. |
-| 🎚️ **[QPE](./QPE)** | Quantum Phase Estimation, *Phase Kickback*, cascaded controlled operators, and decoding via $QFT^\dagger$. | `QPE_Algorithm.py` | ✅ Exact eigenvalue extraction for secret phase $\theta = 0.125$ with 3 qubits. |
+| 🎚️ **[QPE](./QPE)** | Quantum Phase Estimation, *Phase Kickback*, cascaded controlled operators, and decoding via $\text{QFT}^\dagger$. | `QPE_Algorithm.py` | ✅ Exact eigenvalue extraction for secret phase $\theta = 0.125$ with 3 qubits. |
 | 🔑 **[Shor](./Shor)** | Shor's Algorithm for integer factorization in polynomial time ($\mathcal{O}(n^3)$), Order/Period Finding, and Continued Fractions. | `ShorAlgorithm.py` | ✅ Factoring composite number $N = 15$ with $a = 7$ to yield prime factors $3$ and $5$. |
 | 🛡️ **[BHT Collision](./BHT)** | Brassard-Høyer-Tapp algorithm solving the 2-to-1 collision problem via Birthday Paradox + Grover search. | `BHTAlgorithm.py` | ✅ Unitary Oracle $V = F^\dagger U F$, Grover Search, and Collision Pair Recovery ($\mathcal{O}(N^{1/3})$). |
 

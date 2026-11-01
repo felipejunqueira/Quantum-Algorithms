@@ -1,6 +1,6 @@
 # Shor's Algorithm for Integer Factorization
 
-This folder contains the hybrid quantum-classical implementation of **Shor's Algorithm** for integer factorization. Shor's algorithm provides an exponential speedup over the best known classical factoring algorithms, solving the problem in polynomial time $\mathcal{O}(n^3)$ using Quantum Phase Estimation (QPE).
+This folder contains the hybrid quantum-classical implementation of **Shor's Algorithm** for integer factorization. Shor's algorithm provides an exponential speedup over the best known classical factoring algorithms, solving the problem in polynomial time $\mathcal{O}(n^3)$ (where $n = \lceil \log_2 N \rceil$) using Quantum Phase Estimation (QPE).
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1kZGYeHcZ014jM8A2tuBPwZPFd99C_N-d?usp=sharing)
 
@@ -34,24 +34,26 @@ graph TD
 ### A. Classical Reduction to Period Finding
 1. Choose a random integer $a$ such that $1 < a < N$.
 2. Compute $\gcd(a, N)$ using Euclid's algorithm. If $\gcd(a, N) > 1$, a non-trivial factor is already found.
-3. Otherwise, consider the periodic modular function $f(x) = a^x \pmod{N}$. The **order (or period) $r$** is the smallest positive integer such that $a^r \equiv 1 \pmod{N}$.
+3. Otherwise, consider the periodic modular function $f(x) = a^x \bmod N$. The **order (or period) $r$** is the smallest positive integer such that:
+
+   $$a^r \equiv 1 \pmod{N}$$
 
 ### B. Periodic Sequence Illustration ($N = 15, a = 7$)
 For $N = 15$ and $a = 7$:
-* $7^0 \pmod{15} = 1$
-* $7^1 \pmod{15} = 7$
-* $7^2 \pmod{15} = 4$
-* $7^3 \pmod{15} = 13$
-* $7^4 \pmod{15} = 1$ (Period $r = 4$ identified!)
+* $7^0 \bmod 15 = 1$
+* $7^1 \bmod 15 = 7$
+* $7^2 \bmod 15 = 4$
+* $7^3 \bmod 15 = 13$
+* $7^4 \bmod 15 = 1$ (Period $r = 4$ identified!)
 
-| Modular Function Periodicity ($f(x) = 7^x \pmod{15}$) |
+| Modular Function Periodicity ($f(x) = 7^x \bmod 15$) |
 | :---: |
 | ![Shor Period Graph](shor_period_graph.png) |
 
 ### C. Factor Extraction Formula
 If the extracted period $r$ is **even** and $a^{r/2} \not\equiv -1 \pmod{N}$, then:
 
-$$\left(a^{r/2} - 1\right)\left(a^{r/2} + 1\right) = a^r - 1 = k N$$
+$$\left(a^{r/2} - 1\right)\left(a^{r/2} + 1\right) = a^r - 1 = kN$$
 
 Therefore, the non-trivial prime factors of $N$ are obtained efficiently using the greatest common divisor:
 
@@ -59,8 +61,8 @@ $$p = \gcd\left(a^{r/2} - 1, N\right), \quad q = \gcd\left(a^{r/2} + 1, N\right)
 
 For $N = 15, a = 7, r = 4$:
 * $a^{r/2} = 7^2 = 49$
-* $p = \gcd(49 - 1, 15) = \gcd(48, 15) = \mathbf{3}$
-* $q = \gcd(49 + 1, 15) = \gcd(50, 15) = \mathbf{5}$
+* $p = \gcd(49 - 1, 15) = \gcd(48, 15) = 3$
+* $q = \gcd(49 + 1, 15) = \gcd(50, 15) = 5$
 
 ---
 
@@ -69,10 +71,10 @@ For $N = 15, a = 7, r = 4$:
 The [`ShorAlgorithm.py`](./ShorAlgorithm.py) script implements the hybrid workflow using Qiskit 1.x:
 
 * **Counting Register:** $t = 4$ qubits (resolution $2^4 = 16$).
-* **Target Register:** $n_{target} = 4$ qubits initialized to $|1\rangle$.
-* **Unitary Permutation Operator:** Encapsulates modular multiplication $U|y\rangle = |(7y) \pmod{15}\rangle$.
-* **Inverse QFT Decoder:** Maps phase frequencies to basis states.
-* **Continued Fractions:** Decodes fractions such as $0.25 = 1/4 \implies r = 4$.
+* **Target Register:** $n_{\text{target}} = 4$ qubits initialized to $\vert 1\rangle$.
+* **Unitary Permutation Operator:** Encapsulates modular multiplication $U\vert y\rangle = \vert (7y) \bmod 15\rangle$.
+* **Inverse QFT Decoder ($\text{QFT}^\dagger$):** Maps phase frequencies to basis states.
+* **Continued Fractions:** Decodes fractions such as $0.25 = \frac{1}{4} \implies r = 4$.
 
 ```bash
 === Shor's Algorithm Factorization Demo ===

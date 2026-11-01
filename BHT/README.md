@@ -8,7 +8,7 @@ This folder contains the source code and visual results for the implementation o
 
 ## 1. Theoretical Operation
 
-Given a $2$-to-$1$ function $f: \{0, \dots, N-1\} \to \{0, \dots, N/2-1\}$, the objective is to find a distinct pair $(x_1, x_2)$ such that $f(x_1) = f(x_2)$ and $x_1 \neq x_2$.
+Given a $2$-to-$1$ function $f: \{0, \dots, N-1\} \to \{0, \dots, N/2 - 1\}$, the objective is to find a distinct pair $(x_1, x_2)$ such that $f(x_1) = f(x_2)$ and $x_1 \neq x_2$.
 
 ### A. Classical Pre-sampling Stage
 The algorithm randomly picks $M = \lceil N^{1/3} \rceil$ inputs and stores the pairs $(x, f(x))$ in a classical hash table. If a collision occurs within this sample, the algorithm terminates classically.
@@ -19,16 +19,17 @@ If no collision is found in the sample, Grover's search is configured across the
 $$V = F^\dagger U F$$
 
 where:
-* $F$: Permutation operator encoding function outputs into quantum states: $F|x\rangle = |f(x)\rangle$.
-* $U$: Phase oracle inverting amplitudes of states whose images are in the classical table: $U|y\rangle = -|y\rangle$.
-* $F^\dagger$: Uncomputing step returning to the index basis, ensuring $V|x\rangle = -|x\rangle$ for all collision states.
+* $F$: Permutation operator encoding function outputs into quantum states: $F\vert x\rangle = \vert f(x)\rangle$.
+* $U$: Phase oracle inverting amplitudes of states whose images are in the classical table: $U\vert y\rangle = -\vert y\rangle$.
+* $F^\dagger$: Uncomputing step returning to the index basis, ensuring $V\vert x\rangle = -\vert x\rangle$ for all collision states (and $V\vert x\rangle = \vert x\rangle$ otherwise).
+* $D$: Householder inversion-about-the-mean diffuser operator $D = 2\vert s\rangle\langle s\vert - I$, where $\vert s\rangle = H^{\otimes n}\vert 0\rangle^{\otimes n}$.
 
 ### C. Grover Iterations and Query Complexity
 With $M = N^{1/3}$ marked targets in domain $N$, the optimal number of Grover iterations is:
 
-$$R \approx \frac{\pi}{4}\sqrt{\frac{N}{M}} = \frac{\pi}{4}\sqrt{\frac{N}{N^{1/3}}} = \mathcal{O}(N^{1/3})$$
+$$R \approx \frac{\pi}{4}\sqrt{\frac{N}{M}} = \frac{\pi}{4}\sqrt{\frac{N}{N^{1/3}}} = \frac{\pi}{4} N^{1/3} = \mathcal{O}(N^{1/3})$$
 
-Total queries: Classical ($N^{1/3}$) + Quantum ($N^{1/3}$) = **$\mathcal{O}(N^{1/3})$**, establishing the theoretical lower bound for black-box collision finding.
+Total queries: Classical ($\mathcal{O}(N^{1/3})$) + Quantum ($\mathcal{O}(N^{1/3})$) = **$\mathcal{O}(N^{1/3})$**, establishing the theoretical lower bound for black-box collision finding.
 
 ---
 

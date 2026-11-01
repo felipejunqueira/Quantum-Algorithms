@@ -1,6 +1,6 @@
 # Grover's Algorithm: Quantum Unstructured Search
 
-This folder contains the source code and visual results for the implementation of **Grover's Algorithm**. This algorithm provides a quadratic speedup ($O(\sqrt{N})$) for unstructured search problems by exploiting quantum superposition and amplitude amplification, in contrast to classical search which requires linear complexity ($O(N)$).
+This folder contains the source code and visual results for the implementation of **Grover's Algorithm**. This algorithm provides a quadratic speedup ($\mathcal{O}(\sqrt{N})$) for unstructured search problems by exploiting quantum superposition and amplitude amplification, in contrast to classical search which requires linear complexity ($\mathcal{O}(N)$).
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1kZGYeHcZ014jM8A2tuBPwZPFd99C_N-d?usp=sharing)
 
@@ -15,25 +15,47 @@ Graphically, the algorithm operates as a **geometric rotation** of the quantum s
 ### A. The Oracle ($U_\omega$)
 The Oracle rotates only the phase of the target state $|\omega\rangle$, leaving all other states unaltered:
 
-$$|x\rangle \mapsto \begin{cases} -|x\rangle & \text{if } x = \omega \\ \phantom{-}|x\rangle & \text{if } x \neq \omega \end{cases}$$
+$$
+|x\rangle \mapsto \begin{cases} -|x\rangle & \text{if } x = \omega \\ \phantom{-}|x\rangle & \text{if } x \neq \omega \end{cases}
+$$
+
+Alternatively, this unitary transformation can be expressed as:
+
+$$
+U_\omega = I - 2|\omega\rangle\langle\omega|
+$$
 
 ### B. The Diffuser ($U_s$)
-The Diffuser (or inversion about the mean operator) performs a reflection around the uniform superposition state $|s\rangle$. It amplifies the probability amplitude of the state that was marked negatively by the Oracle, while simultaneously reducing the amplitude of all incorrect states.
+The Diffuser (or inversion about the mean operator) performs a reflection around the uniform superposition state $|s\rangle$. It amplifies the probability amplitude of the state that was marked negatively by the Oracle, while simultaneously reducing the amplitude of all incorrect states:
+
+$$
+U_s = 2|s\rangle\langle s| - I
+$$
+
+where the uniform equal superposition state is initialized by applying Hadamard gates to all qubits:
+
+$$
+|s\rangle = H^{\otimes n}|0\rangle^{\otimes n} = \frac{1}{\sqrt{N}}\sum_{x=0}^{N-1} |x\rangle
+$$
 
 ### Optimal Number of Iterations ($R$)
-Unlike classical computing where we can search indefinitely, Grover's Algorithm is periodic. If we apply too many iterations, the probability begins to decrease (a phenomenon known as over-rotation). The ideal number of iterations to obtain maximum success probability is given by:
+Unlike classical computing where we can search indefinitely, Grover's Algorithm is periodic in Hilbert space. If we apply too many iterations, the probability begins to decrease (a phenomenon known as over-rotation). The ideal number of iterations to obtain maximum success probability is given by:
 
-$$R \approx \frac{\pi}{4}\sqrt{N}$$
+$$
+R \approx \left\lfloor \frac{\pi}{4}\sqrt{N} \right\rceil
+$$
 
-For $N = 16$ states:
+For $N = 2^4 = 16$ states:
 
-$$R \approx \frac{\pi}{4}\sqrt{16} = \pi \approx 3 \text{ iterations}$$
+$$
+R \approx \frac{\pi}{4}\sqrt{16} = \pi \approx 3.14 \implies 3 \text{ iterations}
+$$
 
 ---
 
 ## 2. Implementation: Searching for State $|\omega\rangle = |0101\rangle$
 
-In the [`GroverAlgorithm.py`](./GroverAlgorithm.py) script, the configured target state is $\omega = 5$ (represented by the binary string `0101`).
+In the [`GroverAlgorithm.py`](./GroverAlgorithm.py) script, the configured target state is $\omega = 5$ (represented by the binary string `0101`, since $5_{10} = 0101_2$).
 
 ### Circuit Structure
 
@@ -71,5 +93,5 @@ As expected, the amplitude of target state $|0101\rangle$ completely dominates t
 
 To simulate Grover's circuit locally and obtain the graphical outputs:
 ```bash
-python GroverAlgorithm.py
+python Grover/GroverAlgorithm.py
 ```
