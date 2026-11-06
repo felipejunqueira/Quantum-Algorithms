@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritmo de Grover: O Oráculo e o Difusor Passo a Passo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+            color: #f1f5f9;
+        }
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        /* Estilo customizado para barra de rolagem fina */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-3 sm:p-6 select-none">
+
+    <!-- Container Principal -->
+    <div class="max-w-6xl w-full mx-auto space-y-4">
+
+        <!-- Cabeçalho -->
+        <header class="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-900/90 border border-slate-800 rounded-2xl p-4 shadow-lg">
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full">Visualizador Didático</span>
+                    <span class="text-xs text-slate-400 mono">4 Qubits (N = 16) • Alvo: |0101⟩ (5)</span>
+                </div>
+                <h1 class="text-xl sm:text-2xl font-extrabold text-white mt-1">
+                    Algoritmo de Grover: Como o <span class="text-rose-400">Oráculo</span> e o <span class="text-amber-400">Difusor</span> Funcionam
+                </h1>
+            </div>
+
+            <!-- Placar Rápido de Probabilidades -->
+            <div class="flex items-center gap-3 bg-slate-950/80 border border-slate-800 px-4 py-2.5 rounded-xl">
+                <div class="text-right">
+                    <div class="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">Chance de medir |0101⟩</div>
+                    <div id="probTargetDisplay" class="text-2xl sm:text-3xl font-extrabold text-emerald-400 mono">6.25%</div>
+                </div>
+                <div class="h-9 w-[1px] bg-slate-800"></div>
+                <div class="text-left">
+                    <div class="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">Cada um dos outros 15</div>
+                    <div id="probOthersDisplay" class="text-lg sm:text-xl font-bold text-slate-300 mono">6.25%</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Barra de Etapas (Timeline Clicável) -->
+        <nav class="bg-slate-900/80 border border-slate-800 rounded-2xl p-2 overflow-x-auto">
+            <div id="stepTabs" class="flex items-center justify-between gap-1.5 min-w-[720px]">
+                <!-- Gerado via JS -->
+            </div>
+        </nav>
+
+        <!-- Área Gráfica Principal (Canvas) -->
+        <div class="relative bg-slate-900 border border-slate-800 rounded-2xl p-3 sm:p-5 shadow-2xl">
+            <!-- Legenda Superior no Gráfico -->
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2 text-xs sm:text-sm">
+                <div class="flex flex-wrap items-center gap-4">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3.5 h-3.5 rounded-full bg-emerald-400 inline-block shadow-[0_0_8px_#34d399]"></span>
+                        <span class="text-slate-200 font-medium">Alvo <strong class="mono text-emerald-400">|0101⟩</strong> (<span id="ampTargetLegend" class="mono">+0.250</span>)</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-3.5 h-3.5 rounded-full bg-sky-400 inline-block"></span>
+                        <span class="text-slate-300">Outros 15 estados (<span id="ampOthersLegend" class="mono">+0.250</span>)</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-6 h-0.5 border-b-2 border-dashed border-amber-400 inline-block"></span>
+                        <span class="text-amber-300 font-medium">Linha da Média (<span id="meanLegend" class="mono">+0.250</span>)</span>
+                    </div>
+                </div>
+                <div id="mirrorBadge" class="hidden items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-semibold animate-pulse">
+                    <span>🪞 Espelhando os pauzinhos na linha da média!</span>
+                </div>
+            </div>
+
+            <!-- Canvas Responsivo -->
+            <div class="w-full h-[320px] sm:h-[390px] relative">
+                <canvas id="groverCanvas" class="w-full h-full block"></canvas>
+            </div>
+        </div>
+
+        <!-- Card de Explicação Didática + Controles -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+            <!-- Explicação -->
+            <div class="lg:col-span-8 bg-slate-900/95 border border-slate-800 rounded-2xl p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden">
+                <div id="stepColorBar" class="absolute top-0 left-0 w-1.5 h-full bg-emerald-500"></div>
+                <div class="pl-2">
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <span id="stepBadge" class="px-2.5 py-0.5 text-xs font-bold rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">PASSO 0 DE 7</span>
+                        <h2 id="stepTitle" class="text-lg sm:text-xl font-bold text-white">Superposição Inicial (Porta H)</h2>
+                    </div>
+                    <p id="stepDescription" class="text-slate-300 text-sm sm:text-base leading-relaxed mt-2">
+                        Todos os 16 estados começam exatamente iguais, com o pauzinho para cima na altura +0.25.
+                    </p>
+                </div>
+                <div id="stepTip" class="mt-3 pl-2 pt-2.5 border-t border-slate-800/80 text-xs sm:text-sm text-amber-300/90 font-medium flex items-center gap-2">
+                    <span>💡</span>
+                    <span id="stepTipText">Dica para falar na apresentação: "Começamos aplicando Hadamard para dar a mesma chance a todos os 16 itens."</span>
+                </div>
+            </div>
+
+            <!-- Controles de Navegação -->
+            <div class="lg:col-span-4 bg-slate-900/95 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between gap-3">
+                <div class="grid grid-cols-2 gap-2.5">
+                    <button id="prevBtn" onclick="changeStep(-1)" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold text-sm bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 transition disabled:opacity-40 disabled:pointer-events-none border border-slate-700">
+                        <span>⬅️</span> Anterior
+                    </button>
+                    <button id="nextBtn" onclick="changeStep(1)" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold text-sm bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white shadow-lg shadow-emerald-600/25 transition disabled:opacity-40 disabled:pointer-events-none">
+                        Próximo <span>➡️</span>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2.5">
+                    <button id="autoPlayBtn" onclick="toggleAutoPlay()" class="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl font-semibold text-xs sm:text-sm bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 transition">
+                        <span id="autoPlayIcon">▶️</span> <span id="autoPlayText">Automático</span>
+                    </button>
+                    <button onclick="goToStep(0)" class="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl font-semibold text-xs sm:text-sm bg-slate-800/90 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
+                        🔄 Reiniciar
+                    </button>
+                </div>
+
+                <!-- Barra visual da probabilidade do Alvo -->
+                <div class="bg-slate-950/90 p-2.5 rounded-xl border border-slate-800/80">
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-slate-400">Amplificação de |0101⟩:</span>
+                        <span id="barProbLabel" class="font-bold text-emerald-400 mono">6.25%</span>
+                    </div>
+                    <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
+                        <div id="probProgressBar" class="h-full bg-gradient-to-r from-emerald-500 to-cyan-400 transition-all duration-500" style="width: 6.25%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================================================
+        // DADOS EXATOS DOS PASSOS DO ALGORITMO DE GROVER PARA N = 16 (4 QUBITS)
+        // Estado alvo: |0101> (índice 5)
+        // Fórmula do Difusor (Inversão sobre a média): A_novo = 2 * Média - A_antigo
+        // ============================================================================
+        const STEPS = [
+            {
+                id: 0,
+                shortLabel: "0. Início (H)",
+                badge: "PASSO 0 • INICIALIZAÇÃO",
+                title: "Superposição Uniforme (Porta Hadamard)",
+                type: "init",
+                color: "#38bdf8",
+                targetAmp: 0.25,
+                otherAmp: 0.25,
+                mean: 0.25,
+                prevTargetAmp: null,
+                prevOtherAmp: null,
+                description: "Aplicamos a porta Hadamard (H) em todos os qubits. Todos os <strong>16 pauzinhos apontam para cima</strong> com a exata mesma altura (<span class='mono text-sky-300'>+0.25</span>). A linha tracejada da <strong>Média</strong> passa exatamente na cabecinha de todos eles.",
+                tip: "Fale na apresentação: \"No começo, todos os 16 estados empatam com 6,25% de chance cada um.\""
+            },
+            {
+                id: 1,
+                shortLabel: "1. Oráculo (1ª)",
+                badge: "1ª RODADA • ORÁCULO ATUA",
+                title: "O Oráculo marca o |0101⟩ virando ele para baixo!",
+                type: "oracle",
+                color: "#fb7185",
+                targetAmp: -0.25,
+                otherAmp: 0.25,
+                mean: 0.1875, // (15*0.25 - 0.25)/16 = 3.5/16 = 0.21875 -> Exato: 3.5 / 16 = 0.21875
+                prevTargetAmp: 0.25,
+                prevOtherAmp: 0.25,
+                description: "O <strong>Oráculo</strong> identifica o estado correto <strong class='text-emerald-400 mono'>|0101⟩</strong> e multiplica sua amplitude por <span class='mono text-rose-400'>-1</span>: o pauzinho dele <strong>vira de cabeça para baixo</strong> (<span class='mono'>-0.25</span>)! Repare que isso puxa a linha tracejada da <strong>Média</strong> um pouquinho para baixo (<span class='mono text-amber-300'>+0.219</span>).",
+                tip: "Detalhe importante: A probabilidade ainda é 6,25% porque (-0.25)² = +0.0625. O medidor não vê sinal negativo! Precisamos do Difusor."
+            },
+            {
+                id: 2,
+                shortLabel: "2. Difusor (1ª)",
+                badge: "1ª RODADA • DIFUSOR ATUA",
+                title: "O Difusor espelha todos os pauzinhos na Linha da Média!",
+                type: "diffuser",
+                color: "#fbbf24",
+                targetAmp: 0.6875,  // 2*(0.21875) - (-0.25) = 0.4375 + 0.25 = 0.6875 (Prob = 47.27%)
+                otherAmp: 0.1875,   // 2*(0.21875) - 0.25 = 0.4375 - 0.25 = 0.1875
+                mean: 0.21875,
+                prevTargetAmp: -0.25,
+                prevOtherAmp: 0.25,
+                description: "Veja a mágica da <strong>Inversão sobre a Média</strong>: a linha tracejada laranja funciona como um <strong>espelho</strong>! Os 15 pauzinhos azuis estavam um pouco <em>acima</em> da média, então ao espelhar eles <strong>encolhem para baixo</strong>. Já o <strong class='text-emerald-400 mono'>|0101⟩</strong> estava <em>muito abaixo</em> da média (negativo), então ao espelhar ele <strong>dispara lá para cima</strong> (<span class='mono text-emerald-300'>+0.688</span>)!",
+                tip: "Só nessa 1ª rodada, a chance de sortear o |0101⟩ já saltou de 6,25% para 47,3%!"
+            },
+            {
+                id: 3,
+                shortLabel: "3. Oráculo (2ª)",
+                badge: "2ª RODADA • ORÁCULO ATUA",
+                title: "2ª Rodada: O Oráculo vira o |0101⟩ gigante para baixo",
+                type: "oracle",
+                color: "#fb7185",
+                targetAmp: -0.6875,
+                otherAmp: 0.1875,
+                mean: 0.1328125, // (15*0.1875 - 0.6875)/16 = 2.125 / 16 = 0.1328125
+                prevTargetAmp: 0.6875,
+                prevOtherAmp: 0.1875,
+                description: "Começamos a 2ª repetição! O <strong>Oráculo</strong> inverte novamente o sinal do <strong class='text-emerald-400 mono'>|0101⟩</strong>, jogando aquele pauzinho grande lá para baixo (<span class='mono text-rose-400'>-0.688</span>). Como ele estava muito grande e ficou negativo, ele puxa a linha da <strong>Média</strong> bem mais para baixo (<span class='mono text-amber-300'>+0.133</span>).",
+                tip: "Repare como os 15 pauzinhos azuis agora ficaram bem acima da nova linha da média."
+            },
+            {
+                id: 4,
+                shortLabel: "4. Difusor (2ª)",
+                badge: "2ª RODADA • DIFUSOR ATUA",
+                title: "2ª Rodada: O Difusor espelha na média e o |0101⟩ explode!",
+                type: "diffuser",
+                color: "#fbbf24",
+                targetAmp: 0.953125, // 2*0.1328125 - (-0.6875) = 0.265625 + 0.6875 = 0.953125 (Prob = 90.84%)
+                otherAmp: 0.078125,  // 2*0.1328125 - 0.1875 = 0.265625 - 0.1875 = 0.078125
+                mean: 0.1328125,
+                prevTargetAmp: -0.6875,
+                prevOtherAmp: 0.1875,
+                description: "O <strong>Difusor</strong> rebate todo mundo na linha da média de novo! Como os 15 estados errados estavam acima da média, eles são rebatidos para baixo e <strong>quase somem</strong> (<span class='mono'>+0.078</span>). E o <strong class='text-emerald-400 mono'>|0101⟩</strong> que estava lá no fundo salta para <span class='mono text-emerald-300'>+0.953</span>!",
+                tip: "Agora o estado |0101⟩ já tem 90,8% de probabilidade! Vamos para a 3ª e última rodada."
+            },
+            {
+                id: 5,
+                shortLabel: "5. Oráculo (3ª)",
+                badge: "3ª RODADA • ORÁCULO ATUA",
+                title: "3ª Rodada: O Oráculo joga o |0101⟩ lá no fundo",
+                type: "oracle",
+                color: "#fb7185",
+                targetAmp: -0.953125,
+                otherAmp: 0.078125,
+                mean: 0.013671875, // (15*0.078125 - 0.953125)/16 = 0.21875 / 16 = 0.013671875
+                prevTargetAmp: 0.953125,
+                prevOtherAmp: 0.078125,
+                description: "Última passagem pelo <strong>Oráculo</strong>: o pauzinho de <strong class='text-emerald-400 mono'>|0101⟩</strong> é invertido para <span class='mono text-rose-400'>-0.953</span>. Agora ele puxa tanto a média que a linha tracejada quase encosta no eixo zero (<span class='mono text-amber-300'>+0.014</span>).",
+                tip: "Veja que os 15 pauzinhos errados estão em +0.078 e a média está em +0.014: quando espelhar, eles vão zerar!"
+            },
+            {
+                id: 6,
+                shortLabel: "6. Difusor (3ª) 🏆",
+                badge: "3ª RODADA • PONTO ÓTIMO ALCANÇADO!",
+                title: "3ª Rodada: Probabilidade Máxima (96,1%) no |0101⟩!",
+                type: "diffuser",
+                color: "#10b981",
+                targetAmp: 0.98046875, // 2*0.013671875 - (-0.953125) = 0.98046875 (Prob = 96.13%)
+                otherAmp: -0.05078125, // 2*0.013671875 - 0.078125 = -0.05078125
+                mean: 0.013671875,
+                prevTargetAmp: -0.953125,
+                prevOtherAmp: 0.078125,
+                description: "<strong>BINGO!</strong> Ao espelhar na média pela 3ª vez (regra de <span class='mono'>(π/4)√16 ≈ 3</span>), o <strong class='text-emerald-400 mono'>|0101⟩</strong> atinge seu pico máximo de <span class='mono text-emerald-300'>+0.980</span> (<strong>96,13% de chance na medição!</strong>), enquanto os outros 15 estados praticamente colam na linha zero (apenas 0,25% de chance cada). É aqui que medimos o circuito!",
+                tip: "Fale na banca: \"Com apenas 3 repetições, concentramos mais de 96% de toda a probabilidade na resposta certa!\""
+            },
+            {
+                id: 7,
+                shortLabel: "7. E se rodar a 4ª? ⚠️",
+                badge: "BÔNUS • POR QUE PARAR NA 3ª RODADA?",
+                title: "4ª Rodada (Passou do Ponto!): A probabilidade CAI!",
+                type: "over",
+                color: "#f97316",
+                // Se aplicar Oráculo 4: target = -0.98046875, other = -0.05078125 -> Média = (-0.98046875 + 15*-0.05078125)/16 = -0.1088867
+                // Difusor 4: target = 2*(-0.1088867) - (-0.98046875) = +0.762695 (Prob = 58.17%)
+                // other = 2*(-0.1088867) - (-0.05078125) = -0.166992
+                targetAmp: 0.7626953125,
+                otherAmp: -0.1669921875,
+                mean: -0.10888671875,
+                prevTargetAmp: -0.98046875,
+                prevOtherAmp: -0.05078125,
+                description: "<strong>Curiosidade de Banca:</strong> O que acontece se a gente não parar na 3ª rodada e fizer uma 4ª rodada? Como os 15 pauzinhos já tinham passado para baixo de zero, a média fica negativa e, ao espelhar, o <strong class='text-emerald-400 mono'>|0101⟩</strong> <strong>encolhe de 96,1% para 58,2%</strong> e os erros voltam a crescer! Por isso o número de repetições do Grover tem que ser exato.",
+                tip: "Se o seu professor perguntar por que não colocamos 10 repetições no loop for, mostre exatamente este passo!"
+            }
+        ];
+
+        // corrigir valor exato da média do passo 1 na exibição
+        STEPS[1].mean = 0.21875;
+
+        // Estado atual da animação
+        let currentStepIndex = 0;
+        let animState = {
+            targetAmp: STEPS[0].targetAmp,
+            otherAmp: STEPS[0].otherAmp,
+            mean: STEPS[0].mean,
+            mirrorGhostAlpha: 0
+        };
+
+        let animationFrameId = null;
+        let autoPlayInterval = null;
+
+        const canvas = document.getElementById('groverCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Inicializar Abas de Etapas
+        function renderStepTabs() {
+            const container = document.getElementById('stepTabs');
+            container.innerHTML = '';
+            STEPS.forEach((step, idx) => {
+                const active = idx === currentStepIndex;
+                const btn = document.createElement('button');
+                btn.onclick = () => goToStep(idx);
+                btn.className = `flex-1 py-2 px-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap border ${
+                    active
+                        ? 'bg-slate-800 text-white border-emerald-500/60 shadow-md scale-[1.02]'
+                        : 'bg-slate-950/50 text-slate-400 border-transparent hover:bg-slate-800/50 hover:text-slate-200'
+                }`;
+                btn.innerHTML = step.shortLabel;
+                container.appendChild(btn);
+            });
+        }
+
+        // Redimensionar Canvas com suporte a telas Retina (High DPI)
+        function resizeCanvas() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            drawScene();
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        // Desenhar o gráfico completo de "pauzinhos" (stem plot)
+        function drawScene() {
+            const width = canvas.parentElement.clientWidth;
+            const height = canvas.parentElement.clientHeight;
+            ctx.clearRect(0, 0, width, height);
+
+            const padLeft = width < 500 ? 44 : 62;
+            const padRight = width < 500 ? 20 : 36;
+            const padTop = 28;
+            const padBottom = 42;
+
+            const plotW = width - padLeft - padRight;
+            const plotH = height - padTop - padBottom;
+
+            // Eixo central (Amplitude = 0) fica exatamente no meio vertical da área de plotagem
+            const zeroY = padTop + plotH / 2;
+            // Escala vertical: de -1.05 até +1.05
+            const maxAmpScale = 1.08;
+            const ampToY = (amp) => zeroY - (amp / maxAmpScale) * (plotH / 2);
+
+            // 1. Linhas de grade horizontais sutis (+1.0, +0.5, 0, -0.5, -1.0)
+            const gridLevels = [1.0, 0.5, 0, -0.5, -1.0];
+            ctx.font = '500 11px "JetBrains Mono", monospace';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+
+            gridLevels.forEach(level => {
+                const y = ampToY(level);
+                ctx.beginPath();
+                ctx.moveTo(padLeft, y);
+                ctx.lineTo(width - padRight, y);
+                if (level === 0) {
+                    ctx.strokeStyle = '#64748b';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([]);
+                } else {
+                    ctx.strokeStyle = 'rgba(148, 163, 184, 0.13)';
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([4, 4]);
+                }
+                ctx.stroke();
+
+                // Rótulo do eixo Y
+                ctx.fillStyle = level === 0 ? '#e2e8f0' : '#64748b';
+                const label = level > 0 ? `+${level.toFixed(1)}` : level.toFixed(1);
+                ctx.fillText(label, padLeft - 8, y);
+            });
+            ctx.setLineDash([]);
+
+            // 2. Desenhar Linha da Média (Tracejada Dourada/Laranja)
+            const meanY = ampToY(animState.mean);
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(padLeft, meanY);
+            ctx.lineTo(width - padRight, meanY);
+            ctx.strokeStyle = '#fbbf24';
+            ctx.lineWidth = 2.5;
+            ctx.setLineDash([8, 6]);
+            ctx.stroke();
+
+            // Etiqueta da Média no canto direito
+            const meanLabel = `Média: ${animState.mean >= 0 ? '+' : ''}${animState.mean.toFixed(3)}`;
+            ctx.font = '700 11px "JetBrains Mono", monospace';
+            const textW = ctx.measureText(meanLabel).width + 12;
+            const badgeX = width - padRight - textW - 4;
+            const badgeY = meanY - 22;
+
+            ctx.fillStyle = 'rgba(251, 191, 36, 0.18)';
+            ctx.strokeStyle = 'rgba(251, 191, 36, 0.6)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([]);
+            ctx.beginPath();
+            ctx.roundRect(badgeX, badgeY, textW, 18, 5);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = '#fde68a';
+            ctx.textAlign = 'left';
+            ctx.fillText(meanLabel, badgeX + 6, badgeY + 9.5);
+            ctx.restore();
+
+            // 3. Desenhar os 16 "Pauzinhos" (Estados |0000> a |1111>)
+            const stepData = STEPS[currentStepIndex];
+            const slotW = plotW / 16;
+
+            for (let i = 0; i < 16; i++) {
+                const isTarget = (i === 5); // |0101>
+                const x = padLeft + slotW * (i + 0.5);
+                const currentAmp = isTarget ? animState.targetAmp : animState.otherAmp;
+                const y = ampToY(currentAmp);
+
+                // Se estivermos num passo do Difusor, desenha a "sombra fantasma" de onde o pauzinho veio antes de espelhar na média
+                if ((stepData.type === 'diffuser' || stepData.type === 'over') && stepData.prevTargetAmp !== null) {
+                    const prevAmp = isTarget ? stepData.prevTargetAmp : stepData.prevOtherAmp;
+                    const prevY = ampToY(prevAmp);
+
+                    // Linha tracejada mostrando o espelhamento em relação à média
+                    if (isTarget || i === 2 || i === 11) {
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.moveTo(x, prevY);
+                        ctx.lineTo(x, y);
+                        ctx.strokeStyle = isTarget ? 'rgba(52, 211, 153, 0.35)' : 'rgba(56, 189, 248, 0.22)';
+                        ctx.lineWidth = 1.5;
+                        ctx.setLineDash([3, 3]);
+                        ctx.stroke();
+
+                        // Bolinha fantasma na posição antiga (antes de espelhar)
+                        ctx.beginPath();
+                        ctx.arc(x, prevY, isTarget ? 5 : 3.5, 0, Math.PI * 2);
+                        ctx.fillStyle = isTarget ? 'rgba(251, 113, 133, 0.45)' : 'rgba(148, 163, 184, 0.3)';
+                        ctx.fill();
+                        ctx.restore();
+                    }
+                }
+
+                // Haste vertical ("pauzinho") da linha 0 até a amplitude atual
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(x, zeroY);
+                ctx.lineTo(x, y);
+
+                if (isTarget) {
+                    ctx.strokeStyle = currentAmp >= 0 ? '#10b981' : '#fb7185';
+                    ctx.lineWidth = width < 500 ? 4.5 : 6;
+                    ctx.shadowColor = currentAmp >= 0 ? '#10b981' : '#fb7185';
+                    ctx.shadowBlur = 10;
+                } else {
+                    ctx.strokeStyle = currentAmp >= 0 ? '#38bdf8' : '#94a3b8';
+                    ctx.lineWidth = width < 500 ? 2.5 : 3.5;
+                }
+                ctx.lineCap = 'round';
+                ctx.stroke();
+
+                // Bolinha na ponta do pauzinho
+                ctx.beginPath();
+                ctx.arc(x, y, isTarget ? (width < 500 ? 6 : 7.5) : (width < 500 ? 3.5 : 4.5), 0, Math.PI * 2);
+                if (isTarget) {
+                    ctx.fillStyle = currentAmp >= 0 ? '#34d399' : '#fda4af';
+                } else {
+                    ctx.fillStyle = currentAmp >= 0 ? '#7dd3fc' : '#cbd5e1';
+                }
+                ctx.fill();
+                ctx.restore();
+
+                // Valor numérico em cima/baixo do pauzinho alvo |0101>
+                if (isTarget) {
+                    ctx.save();
+                    ctx.font = '800 12px "JetBrains Mono", monospace';
+                    ctx.textAlign = 'center';
+                    const valText = `${currentAmp >= 0 ? '+' : ''}${currentAmp.toFixed(2)}`;
+                    const labelOffsetY = currentAmp >= 0 ? y - 16 : y + 18;
+                    ctx.fillStyle = currentAmp >= 0 ? '#6ee7b7' : '#fda4af';
+                    ctx.fillText(valText, x, labelOffsetY);
+                    ctx.restore();
+                }
+
+                // Rótulo binário no rodapé (|0000> ... |1111>)
+                const binStr = i.toString(2).padStart(4, '0');
+                ctx.save();
+                ctx.font = isTarget
+                    ? (width < 600 ? '700 9px "JetBrains Mono", monospace' : '700 11px "JetBrains Mono", monospace')
+                    : (width < 600 ? '400 8px "JetBrains Mono", monospace' : '500 10px "JetBrains Mono", monospace');
+                ctx.textAlign = 'center';
+                ctx.fillStyle = isTarget ? '#34d399' : '#94a3b8';
+
+                const labelY = height - 16;
+                ctx.fillText(isTarget ? `|${binStr}⟩` : binStr, x, labelY);
+
+                if (isTarget) {
+                    ctx.font = '700 9px "Inter", sans-serif';
+                    ctx.fillStyle = '#10b981';
+                    ctx.fillText('ALVO (5)', x, labelY - 12);
+                }
+                ctx.restore();
+            }
+        }
+
+        // Atualizar textos, legendas e animar a transição suave dos pauzinhos
+        function updateUIAndAnimate() {
+            const step = STEPS[currentStepIndex];
+
+            // Atualizar botões de navegação
+            document.getElementById('prevBtn').disabled = (currentStepIndex === 0);
+            document.getElementById('nextBtn').disabled = (currentStepIndex === STEPS.length - 1);
+
+            // Atualizar textos do Card
+            document.getElementById('stepBadge').textContent = step.badge;
+            document.getElementById('stepTitle').textContent = step.title;
+            document.getElementById('stepDescription').innerHTML = step.description;
+            document.getElementById('stepTipText').textContent = step.tip;
+            document.getElementById('stepColorBar').style.backgroundColor = step.color;
+
+            // Mostrar badge de espelhamento quando for o passo do Difusor
+            const mirrorBadge = document.getElementById('mirrorBadge');
+            if (step.type === 'diffuser') {
+                mirrorBadge.classList.remove('hidden');
+                mirrorBadge.classList.add('flex');
+            } else {
+                mirrorBadge.classList.add('hidden');
+                mirrorBadge.classList.remove('flex');
+            }
+
+            // Atualizar legendas e probabilidades (amplitude ao quadrado * 100)
+            const probTarget = (step.targetAmp * step.targetAmp * 100);
+            const probOther = (step.otherAmp * step.otherAmp * 100);
+
+            document.getElementById('probTargetDisplay').textContent = `${probTarget.toFixed(2)}%`;
+            document.getElementById('probOthersDisplay').textContent = `${probOther.toFixed(2)}%`;
+            document.getElementById('barProbLabel').textContent = `${probTarget.toFixed(2)}%`;
+            document.getElementById('probProgressBar').style.width = `${Math.min(100, probTarget)}%`;
+
+            document.getElementById('ampTargetLegend').textContent = `${step.targetAmp >= 0 ? '+' : ''}${step.targetAmp.toFixed(3)}`;
+            document.getElementById('ampOthersLegend').textContent = `${step.otherAmp >= 0 ? '+' : ''}${step.otherAmp.toFixed(3)}`;
+            document.getElementById('meanLegend').textContent = `${step.mean >= 0 ? '+' : ''}${step.mean.toFixed(3)}`;
+
+            renderStepTabs();
+
+            // Animar os pauzinhos com interpolação suave (easeInOutCubic)
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+
+            const startTarget = animState.targetAmp;
+            const startOther = animState.otherAmp;
+            const startMean = animState.mean;
+
+            const endTarget = step.targetAmp;
+            const endOther = step.otherAmp;
+            const endMean = step.mean;
+
+            const duration = 650; // ms
+            const startTime = performance.now();
+
+            function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            }
+
+            function animateStep(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(1, elapsed / duration);
+                const eased = easeInOutCubic(progress);
+
+                animState.targetAmp = startTarget + (endTarget - startTarget) * eased;
+                animState.otherAmp = startOther + (endOther - startOther) * eased;
+                animState.mean = startMean + (endMean - startMean) * eased;
+
+                drawScene();
+
+                if (progress < 1) {
+                    animationFrameId = requestAnimationFrame(animateStep);
+                }
+            }
+
+            animationFrameId = requestAnimationFrame(animateStep);
+        }
+
+        function changeStep(delta) {
+            const next = currentStepIndex + delta;
+            if (next >= 0 && next < STEPS.length) {
+                currentStepIndex = next;
+                updateUIAndAnimate();
+            }
+        }
+
+        function goToStep(index) {
+            currentStepIndex = index;
+            updateUIAndAnimate();
+        }
+
+        function toggleAutoPlay() {
+            const btnText = document.getElementById('autoPlayText');
+            const btnIcon = document.getElementById('autoPlayIcon');
+
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = null;
+                btnText.textContent = 'Automático';
+                btnIcon.textContent = '▶️';
+            } else {
+                if (currentStepIndex >= 6) {
+                    goToStep(0);
+                }
+                btnText.textContent = 'Pausar';
+                btnIcon.textContent = '⏸️';
+                autoPlayInterval = setInterval(() => {
+                    if (currentStepIndex < 6) {
+                        changeStep(1);
+                    } else {
+                        toggleAutoPlay(); // Para automaticamente no ponto ótimo (Passo 6)
+                    }
+                }, 2600);
+            }
+        }
+
+        // Suporte para setas do teclado (ótimo para passar slides na apresentação!)
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') changeStep(1);
+            if (e.key === 'ArrowLeft') changeStep(-1);
+        });
+
+        window.onload = () => {
+            renderStepTabs();
+            resizeCanvas();
+            updateUIAndAnimate();
+        };
+    </script>
+</body>
+</html>
